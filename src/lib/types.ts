@@ -1,14 +1,14 @@
-import { SentinelLevels } from "./enums";
+import { SentinelLevel } from "./enums";
 
 export type Planet = {
   _id: string;
   name: string;
   system: string;
   descriptor: string;
-  sentinels: SentinelLevels;
+  sentinels: SentinelLevel;
   moon: boolean;
   resources: {
-    special: string;
+    special: string; // agricultural resource
     r1: string; // stellar metal
     r2: string; // biome specific
     r3: string; // random third element
