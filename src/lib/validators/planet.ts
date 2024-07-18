@@ -1,6 +1,14 @@
-import { error } from "console";
 import { Planet } from "../types";
 
-export function validatePlanet(planet: any, callback: Function) {
-  callback({ error: true, msg: "Not Yet Implemented" });
+interface Submission {}
+
+interface ErrResponse {
+  status: number;
+  msg: string;
+}
+
+export function validatePlanet(
+  submission: Submission,
+): [err: ErrResponse | null, planet?: Planet] {
+  return [{ status: 501, msg: "Not Yet Implemented" }];
 }

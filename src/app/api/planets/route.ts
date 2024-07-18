@@ -1,5 +1,4 @@
 import mongoClient from "@/lib/mongodb";
-import { Planet } from "@/lib/types";
 import { validatePlanet } from "@/lib/validators/planet";
 import { NextResponse } from "next/server";
 
@@ -16,18 +15,21 @@ export async function GET(request: Request) {
 
 export async function PUT(request: Request) {
   const data = await request.json();
-  let response = {};
-  validatePlanet(
-    data,
-    (err: { status: number; msg: string } | null, planet: Planet) => {
-      if (err) {
-        response = { error: true, ...err };
-        return;
-      }
-      response = {
-        success: true,
-        msg: `Successfully added planet ${planet.name}}`,
-      };
-    },
-  );
+
+  const [err, planet] = validatePlanet(data);
+
+  if (err) {
+    return NextResponse.json({ error: err.msg }, { status: err.status });
+  }
+
+  if (!planet) {
+    return NextResponse.json(
+      { error: "Unable to validate planet" },
+      { status: 500 },
+    );
+  }
+
+  return NextResponse.json({
+    msg: `Successfully added planet ${planet.name}}`,
+  });
 }
