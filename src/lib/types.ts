@@ -8,10 +8,17 @@ export type Planet = {
   sentinels: SentinelLevel;
   moon: boolean;
   resources: {
-    special: string; // agricultural resource
-    r1: string; // stellar metal
-    r2: string; // biome specific
-    r3: string; // random third element
+    // The agricultural resource found on the planet
+    agricultural: string;
+
+    // The metal resource dependent on the color of the star
+    stellar: string;
+
+    // The resource local to the planet's biome
+    local: string;
+
+    // Resources that can be found anywhere
+    general: string;
   };
   biome: string;
   exotic: boolean;
