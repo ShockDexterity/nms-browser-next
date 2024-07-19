@@ -1,41 +1,47 @@
 import { Planet, PlanetFilters, System, SystemFilters } from "../types";
 
-export type Reducer = {
+export type GeneralReducer = {
   savedPlanet: Planet | null;
   savedSystem: System | null;
   systemList: System[];
   refreshPlanets: boolean;
   refreshSystems: boolean;
-  dialog: DialogReducer;
-  snackbar: SnackbarReducer;
+};
+
+export type GeneralReducerAction = {
+  type: string;
+  payload: {
+    planet?: Planet;
+    system?: System;
+    systemList?: System[];
+    refreshPlanets: boolean;
+    refreshSystems: boolean;
+  };
 };
 
 export type DialogReducer = {
   display: string;
   title: string;
-  showDialog: string;
+};
+
+export type DialogReducerAction = {
+  type: string;
+  payload: {
+    _for: string;
+    title: string;
+  };
 };
 
 export type SnackbarReducer = {
-  showSnackbar: boolean;
-  snackbarSeverity: string;
-  snackbarMessage: string;
+  show: boolean;
+  severity: string;
+  message: string;
 };
 
-export type ReducerAction = {
+export type SnackbarReducerAction = {
   type: string;
   payload: {
-    snackbar?: {
-      severity: string;
-      message: string;
-    };
-    dialog?: {
-      for: string;
-      title: string;
-      show: string;
-    };
-    planet?: Planet;
-    system?: System;
-    systemList?: System[];
+    severity: string;
+    message: string;
   };
 };
