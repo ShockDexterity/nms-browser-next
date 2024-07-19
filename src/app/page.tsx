@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button, Divider, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 
 export default function Home() {
   return (
