@@ -4,7 +4,7 @@ import { DialogReducer, DialogReducerAction } from "./types";
 export const DialogReducerContext = createContext<DialogReducer>(null!);
 export const DialogDispatchContext = createContext<Function>(null!);
 
-export const DEFAULT_DIA_REDUCER: DialogReducer = {
+export const DEFAULT_DLG_REDUCER: DialogReducer = {
   display: "",
   title: "",
 };
