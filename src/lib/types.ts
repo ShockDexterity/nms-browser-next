@@ -42,3 +42,21 @@ export type System = {
   atlas: boolean;
   blackhole: boolean;
 };
+
+export type PlanetFilters = {
+  biomeOrSpecial: string;
+  stellar: string;
+  otherResource1: string;
+  otherResource2: string;
+};
+
+export type SystemFilters = {
+  faction: string;
+  econType: string;
+  econStr: string;
+  conflict: string;
+  exosuit: boolean;
+  v3: boolean;
+  atlas: boolean;
+  blackhole: boolean;
+};
