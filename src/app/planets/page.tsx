@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
 
+import { Button, Divider, Grid } from "@mui/material";
+
+import PlanetCard from "@/components/PlanetCard";
+
 import { Planet } from "@/lib/types";
-import { SentinelLevel } from "@/lib/enums";
-import { Button, Divider } from "@mui/material";
 
 export default function PlanetPage() {
   const [planets, setPlanets] = React.useState<Planet[]>([]);
@@ -34,24 +36,16 @@ export default function PlanetPage() {
   }
 
   return (
-    <div>
-      <ul>
+    <>
+      <Grid container spacing={2}>
         {planets.map((planet) => {
-          return (
-            <li key={planet._id}>
-              {planet.name} (
-              {planet.sentinels === SentinelLevel.Aggressive
-                ? planet.sentinels.toUpperCase()
-                : planet.sentinels}
-              ) | {planet._id}
-            </li>
-          );
+          return <PlanetCard key={planet._id} planet={planet}></PlanetCard>;
         })}
-      </ul>
+      </Grid>
 
-      <Divider />
+      <Divider sx={{ py: 2, mb: 2 }} />
 
       <Button onClick={() => setRefresh(true)}>Refresh</Button>
-    </div>
+    </>
   );
 }

@@ -183,6 +183,31 @@ export const sharedDescriptors = [
   "Tropical",
 ];
 
+export const specialDescriptors = [
+  "Terraforming Catastrophe",
+  "Imminent Core Detonation",
+  "Infested Paradise",
+  "Xeno-Colony",
+  "The Nest",
+  "Toxic Horror",
+  "Caustic Nightmare",
+  "Boiling Doom",
+  "Fiery Dreadworld",
+  "Radioactive Abomination",
+  "Icy Abhorrence",
+  "Frozen Hell",
+  "Infected Dustbowl",
+  "Terrorsphere",
+  "Planetary Anomaly",
+  "Stellar Corruption Detected",
+  "Vermillion Globe",
+  "Vile Anomaly",
+  "Harsh Blue Globe",
+  "Toxic Anomaly",
+  "Deathly Green Anomaly",
+  "Frozen Anomaly",
+];
+
 export const biomes = [
   "Barren",
   "Beams",
