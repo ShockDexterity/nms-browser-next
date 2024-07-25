@@ -1,8 +1,10 @@
-import { createContext } from "react";
+import { createContext, Dispatch } from "react";
 import { SnackbarReducer, SnackbarReducerAction } from "./types";
 
 export const SnackbarReducerContext = createContext<SnackbarReducer>(null!);
-export const SnackbarDispatchContext = createContext<Function>(null!);
+export const SnackbarDispatchContext = createContext<
+  Dispatch<SnackbarReducerAction>
+>(null!);
 
 export const DEFAULT_SNK_REDUCER: SnackbarReducer = {
   show: false,

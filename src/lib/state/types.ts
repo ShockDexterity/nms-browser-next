@@ -32,6 +32,42 @@ export type DialogReducerAction = {
   };
 };
 
+export type PlanetReducer = {
+  refresh: boolean;
+  planet: Planet | null;
+};
+
+export type PlanetReducerAction = {
+  type: "REFRESH" | "REFRESHED" | "SAVE";
+  payload: {
+    planet?: Planet;
+  };
+};
+
+export type SystemReducer = {
+  refresh: boolean;
+  system: System | null;
+};
+
+export type SystemReducerAction = {
+  type: "REFRESH" | "REFRESHED" | "SAVE";
+  payload: {
+    system?: System;
+    refresh?: boolean;
+  };
+};
+
+export type SystemListReducer = {
+  systemList: string[];
+};
+
+export type SystemListReducerAction = {
+  type: "SET_LIST";
+  payload: {
+    systemList?: string[];
+  };
+};
+
 export type SnackbarReducer = {
   show: boolean;
   severity: string;

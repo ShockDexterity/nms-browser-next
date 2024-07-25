@@ -5,34 +5,35 @@ import { Button, Divider, Grid } from "@mui/material";
 
 import PlanetCard from "@/components/PlanetCard";
 
-import { Planet } from "@/lib/types";
+import { Planet, System } from "@/lib/types";
+// import { SystemListReducerAction } from "@/lib/state/types";
+// import { useSystemListDispatch, useSystemListReducer } from "@/lib/customHooks";
 
 export default function PlanetPage() {
   const [planets, setPlanets] = React.useState<Planet[]>([]);
 
   const [refresh, setRefresh] = React.useState<boolean>(true);
 
-  React.useEffect(() => {
-    const fetchPlanets = async () => {
-      try {
-        const response = await fetch("./api/planets", { method: "GET" });
-        const data = await response.json();
-        setPlanets(data);
-      } catch (err) {
-        console.error(err);
-        window.alert("Unable to retrieve data");
-      }
-    };
+  // const { systemList } = useSystemListReducer();
+  // const systemListDispatch = useSystemListDispatch();
 
+  React.useEffect(() => {
     if (refresh) {
-      console.log("fetching planets");
-      fetchPlanets();
+      // if (systemList.length === 0) {
+      //   window.alert('please hit the "refresh" button');
+      //   fetchSystems(systemListDispatch);
+      // } else {
+      //   console.log(systemList);
+      // }
+
+      fetchPlanets(setPlanets);
       setRefresh(false);
     }
   }, [refresh]);
+  // }, [refresh, systemList, systemListDispatch]);
 
   if (planets.length === 0) {
-    return <div></div>;
+    return <></>;
   }
 
   return (
@@ -49,3 +50,16 @@ export default function PlanetPage() {
     </>
   );
 }
+
+const fetchPlanets = async (
+  setPlanets: React.Dispatch<React.SetStateAction<Planet[]>>,
+) => {
+  try {
+    const response = await fetch("./api/planets", { method: "GET" });
+    const data = await response.json();
+    setPlanets(data);
+  } catch (err) {
+    console.error(err);
+    window.alert("Unable to retrieve data, check console");
+  }
+};

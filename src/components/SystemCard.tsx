@@ -13,16 +13,14 @@ import {
 
 import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
 
-import SentinelText from "./SentinelText";
-
-import { Planet } from "@/lib/types";
-import { getBiomeBorder, getDescriptor } from "@/lib/customFunctions";
+import { System } from "@/lib/types";
+import { getSystemBorder } from "@/lib/customFunctions";
 
 type Props = {
-  planet: Planet;
+  system: System;
 };
 
-export default function PlanetCard({ planet }: Props) {
+export default function SystemCard({ system }: Props) {
   const handleDetailsClick = (event: React.SyntheticEvent) => {
     console.log("Details Not Yet Implemented");
   };
@@ -37,19 +35,24 @@ export default function PlanetCard({ planet }: Props) {
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
-      <Card sx={getBiomeBorder(planet.extreme, planet.infested, planet.exotic)}>
+      <Card sx={getSystemBorder(system.atlas, system.blackhole)}>
         <CardActionArea onClick={handleDetailsClick}>
           <CardHeader
-            title={planet.name}
+            title={system.name}
             titleTypographyProps={{ variant: "h6" }}
-            subheader={getDescriptor(planet.descriptor, planet.moon)}
+            subheader={
+              system.faction + (system.abandoned ? " (Abandoned)" : "")
+            }
           />
 
           <CardContent>
-            <SentinelText level={planet.sentinels} display="card" />
+            <Typography variant="body2" color="textSecondary" component="p">
+              Econ: {system.economy.strength}{" "}
+              {system.economy.type.replace("Advanced", "Adv.")}
+            </Typography>
 
             <Typography variant="body2" color="textSecondary" component="p">
-              {planet.system} System
+              Conflict Level: {system.conflict}
             </Typography>
           </CardContent>
         </CardActionArea>

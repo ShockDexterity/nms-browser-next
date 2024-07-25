@@ -27,6 +27,7 @@ export type Planet = {
 };
 
 export type System = {
+  _id: string;
   name: string;
   faction: string;
   abandoned: boolean;

@@ -1,8 +1,14 @@
-import { createContext } from "react";
-import { DialogReducer, DialogReducerAction } from "./types";
+import { createContext, Dispatch } from "react";
+import {
+  DialogReducer,
+  DialogReducerAction,
+  SystemListReducerAction,
+} from "./types";
 
 export const DialogReducerContext = createContext<DialogReducer>(null!);
-export const DialogDispatchContext = createContext<Function>(null!);
+export const DialogDispatchContext = createContext<
+  Dispatch<SystemListReducerAction>
+>(null!);
 
 export const DEFAULT_DLG_REDUCER: DialogReducer = {
   display: "",

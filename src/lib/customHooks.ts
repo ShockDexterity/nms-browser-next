@@ -1,41 +1,29 @@
 import { useContext } from "react";
 
 import {
-  GeneralDispatchContext,
-  GeneralReducerContext,
-} from "./state/generalReducer";
-import {
   DialogDispatchContext,
   DialogReducerContext,
 } from "./state/dialogReducer";
+
+import {
+  PlanetDispatchContext,
+  PlanetReducerContext,
+} from "./state/planetReducer";
+
 import {
   SnackbarDispatchContext,
   SnackbarReducerContext,
 } from "./state/snackbarReducer";
 
-export const useGeneralReducer = () => {
-  const reducer = useContext(GeneralReducerContext);
+import {
+  SystemDispatchContext,
+  SystemReducerContext,
+} from "./state/systemReducer";
 
-  if (!reducer) {
-    throw new Error(
-      "General reducer has to be used withing <GeneralReducerContext.Provider>",
-    );
-  }
-
-  return reducer;
-};
-
-export const useGeneralDispatch = () => {
-  const dispatch = useContext(GeneralDispatchContext);
-
-  if (!dispatch) {
-    throw new Error(
-      "General dispatch has to be used within <GeneralDispatchContext.Provider>",
-    );
-  }
-
-  return dispatch;
-};
+import {
+  SystemListDispatchContext,
+  SystemListReducerContext,
+} from "./state/systemListReducer";
 
 export const useDialogReducer = () => {
   const reducer = useContext(DialogReducerContext);
@@ -61,6 +49,30 @@ export const useDialogDispatch = () => {
   return dispatch;
 };
 
+export const usePlanetReducer = () => {
+  const reducer = useContext(PlanetReducerContext);
+
+  if (!reducer) {
+    throw new Error(
+      "General reducer has to be used withing <PlanetReducerContext.Provider>",
+    );
+  }
+
+  return reducer;
+};
+
+export const usePlanetDispatch = () => {
+  const dispatch = useContext(PlanetDispatchContext);
+
+  if (!dispatch) {
+    throw new Error(
+      "General dispatch has to be used within <PlanetDispatchContext.Provider>",
+    );
+  }
+
+  return dispatch;
+};
+
 export const useSnackbarReducer = () => {
   const reducer = useContext(SnackbarReducerContext);
 
@@ -79,6 +91,54 @@ export const useSnackbarDispatch = () => {
   if (!dispatch) {
     throw new Error(
       "Snackbar dispatch has to be used within <SnackbarDispatchContext.Provider>",
+    );
+  }
+
+  return dispatch;
+};
+
+export const useSystemReducer = () => {
+  const reducer = useContext(SystemReducerContext);
+
+  if (!reducer) {
+    throw new Error(
+      "General reducer has to be used withing <SystemReducerContext.Provider>",
+    );
+  }
+
+  return reducer;
+};
+
+export const useSystemDispatch = () => {
+  const dispatch = useContext(SystemDispatchContext);
+
+  if (!dispatch) {
+    throw new Error(
+      "General dispatch has to be used within <SystemDispatchContext.Provider>",
+    );
+  }
+
+  return dispatch;
+};
+
+export const useSystemListReducer = () => {
+  const reducer = useContext(SystemListReducerContext);
+
+  if (!reducer) {
+    throw new Error(
+      "General reducer has to be used withing <SystemReducerContext.Provider>",
+    );
+  }
+
+  return reducer;
+};
+
+export const useSystemListDispatch = () => {
+  const dispatch = useContext(SystemListDispatchContext);
+
+  if (!dispatch) {
+    throw new Error(
+      "General dispatch has to be used within <SystemDispatchContext.Provider>",
     );
   }
 
