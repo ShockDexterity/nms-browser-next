@@ -29,7 +29,7 @@ export default function PlanetCard({ planet }: Props) {
   };
 
   const handleEditClick = (event: React.SyntheticEvent) => {
-    console.log("Edit Yet Implemented");
+    console.log("Edit Not Yet Implemented");
   };
 
   const handleDeleteClick = (event: React.SyntheticEvent) => {
