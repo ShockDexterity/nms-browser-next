@@ -5,7 +5,7 @@ import { Button, Divider, Grid } from "@mui/material";
 
 import PlanetCard from "@/components/PlanetCard";
 
-import { Planet, System } from "@/lib/types";
+import { Planet /*, System */ } from "@/lib/types";
 // import { SystemListReducerAction } from "@/lib/state/types";
 // import { useSystemListDispatch, useSystemListReducer } from "@/lib/customHooks";
 

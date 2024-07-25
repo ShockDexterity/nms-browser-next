@@ -1,5 +1,5 @@
 // "use client";
-import { Box, Breadcrumbs, Link, Typography } from "@mui/material";
+import { Box, /* Breadcrumbs, */ Link, Typography } from "@mui/material";
 // import { usePathname } from "next/navigation";
 
 type HeaderProps = {
@@ -17,6 +17,8 @@ export default function Header({ title, subtitle = "" }: HeaderProps) {
           {title}
         </Link>
       </Typography>
+
+      {subtitle && <Typography variant="subtitle2">{subtitle}</Typography>}
 
       {/* {pathname !== "/" && (
         <Breadcrumbs>

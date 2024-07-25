@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
 
-import { System } from "@/lib/types";
 import { Button, Divider, Grid } from "@mui/material";
-import { useSystemListDispatch } from "@/lib/customHooks";
+
 import SystemCard from "@/components/SystemCard";
+
+import { System } from "@/lib/types";
+import { useSystemListDispatch } from "@/lib/customHooks";
 
 export default function PlanetPage() {
   const [systems, setSystems] = React.useState<System[]>([]);
