@@ -11,7 +11,7 @@ export const DEFAULT_PLN_REDUCER: PlanetReducer = {
   planet: null,
 };
 
-export function planetReducer(
+export function planetReducerFunction(
   state: PlanetReducer,
   action: PlanetReducerAction,
 ): PlanetReducer {
@@ -23,6 +23,9 @@ export function planetReducer(
       return { ...state, refresh: false };
 
     case "SAVE": {
+      if (!action.payload) {
+        throw new Error("Action payload must be defined");
+      }
       const { planet } = action.payload;
       if (!planet) {
         throw new Error("Cannot save null|undefined for a planet");

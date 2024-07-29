@@ -17,14 +17,22 @@ import SentinelText from "./SentinelText";
 
 import { Planet } from "@/lib/types";
 import { getBiomeBorder, getDescriptor } from "@/lib/customFunctions";
+import { useDialogDispatch } from "@/lib/customHooks";
 
 type Props = {
   planet: Planet;
 };
 
 export default function PlanetCard({ planet }: Props) {
+  const dialogDispatch = useDialogDispatch();
+
   const handleDetailsClick = (event: React.SyntheticEvent) => {
-    console.log("Details Not Yet Implemented");
+    event.preventDefault();
+    dialogDispatch({ type: "SAVE", payload: { _for: "planet", planet } });
+    dialogDispatch({
+      type: "SHOW_DETAILS_DIALOG",
+      payload: { _for: "planet", title: planet.name },
+    });
   };
 
   const handleEditClick = (event: React.SyntheticEvent) => {

@@ -4,7 +4,7 @@ import { Container, CssBaseline, ThemeProvider } from "@mui/material";
 import Header from "@/components/Header";
 
 import theme from "@/lib/theme";
-import SystemListProvider from "@/components/SystemListProvider";
+import UniversalProviders from "@/components/UniversalProviders";
 
 export default function RootLayout({
   children,
@@ -20,7 +20,7 @@ export default function RootLayout({
             <Container>
               <Header title="No Man's Sky Discovery Browser" />
 
-              <SystemListProvider>{children}</SystemListProvider>
+              <UniversalProviders>{children}</UniversalProviders>
             </Container>
           </ThemeProvider>
         </AppRouterCacheProvider>

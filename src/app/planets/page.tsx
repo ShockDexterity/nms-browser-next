@@ -5,6 +5,13 @@ import { Button, Divider, Grid } from "@mui/material";
 
 import PlanetCard from "@/components/PlanetCard";
 
+import {
+  DEFAULT_PLN_REDUCER,
+  PlanetDispatchContext,
+  planetReducerFunction,
+  PlanetReducerContext,
+} from "@/lib/state/planetReducer";
+
 import { Planet /*, System */ } from "@/lib/types";
 // import { SystemListReducerAction } from "@/lib/state/types";
 // import { useSystemListDispatch, useSystemListReducer } from "@/lib/customHooks";
@@ -12,13 +19,16 @@ import { Planet /*, System */ } from "@/lib/types";
 export default function PlanetPage() {
   const [planets, setPlanets] = React.useState<Planet[]>([]);
 
-  const [refresh, setRefresh] = React.useState<boolean>(true);
+  const [planetReducer, planetDispatch] = React.useReducer(
+    planetReducerFunction,
+    DEFAULT_PLN_REDUCER,
+  );
 
   // const { systemList } = useSystemListReducer();
   // const systemListDispatch = useSystemListDispatch();
 
   React.useEffect(() => {
-    if (refresh) {
+    if (planetReducer.refresh) {
       // if (systemList.length === 0) {
       //   window.alert('please hit the "refresh" button');
       //   fetchSystems(systemListDispatch);
@@ -27,27 +37,33 @@ export default function PlanetPage() {
       // }
 
       fetchPlanets(setPlanets);
-      setRefresh(false);
+      planetDispatch({ type: "REFRESHED", payload: {} });
     }
-  }, [refresh]);
-  // }, [refresh, systemList, systemListDispatch]);
+  }, [planetReducer.refresh]);
+  // }, [planetReducer.refresh, systemList, systemListDispatch]);
 
   if (planets.length === 0) {
     return <></>;
   }
 
   return (
-    <>
-      <Grid container spacing={2}>
-        {planets.map((planet) => {
-          return <PlanetCard key={planet._id} planet={planet}></PlanetCard>;
-        })}
-      </Grid>
+    <PlanetReducerContext.Provider value={planetReducer}>
+      <PlanetDispatchContext.Provider value={planetDispatch}>
+        <Grid container spacing={2}>
+          {planets.map((planet) => {
+            return <PlanetCard key={planet._id} planet={planet}></PlanetCard>;
+          })}
+        </Grid>
 
-      <Divider sx={{ py: 2, mb: 2 }} />
+        <Divider sx={{ py: 2, mb: 2 }} />
 
-      <Button onClick={() => setRefresh(true)}>Refresh</Button>
-    </>
+        <Button
+          onClick={() => planetDispatch({ type: "REFRESHED", payload: {} })}
+        >
+          Refresh
+        </Button>
+      </PlanetDispatchContext.Provider>
+    </PlanetReducerContext.Provider>
   );
 }
 

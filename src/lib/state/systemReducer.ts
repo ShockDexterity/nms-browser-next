@@ -11,7 +11,7 @@ export const DEFAULT_SYS_REDUCER: SystemReducer = {
   system: null,
 };
 
-export function systemReducer(
+export function systemReducerFunction(
   state: SystemReducer,
   action: SystemReducerAction,
 ): SystemReducer {

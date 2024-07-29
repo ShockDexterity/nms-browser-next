@@ -22,13 +22,22 @@ export type GeneralReducerAction = {
 export type DialogReducer = {
   display: string;
   title: string;
+  planet: Planet;
+  system: System;
 };
 
 export type DialogReducerAction = {
-  type: string;
+  type:
+    | "SHOW_DETAILS_DIALOG"
+    | "SHOW_ADD_DIALOG"
+    | "SHOW_EDIT_DIALOG"
+    | "CLOSE_DIALOG"
+    | "SAVE";
   payload: {
-    _for: string;
-    title: string;
+    _for: "planet" | "system";
+    title?: string;
+    planet?: Planet;
+    system?: System;
   };
 };
 
@@ -53,7 +62,6 @@ export type SystemReducerAction = {
   type: "REFRESH" | "REFRESHED" | "SAVE";
   payload: {
     system?: System;
-    refresh?: boolean;
   };
 };
 

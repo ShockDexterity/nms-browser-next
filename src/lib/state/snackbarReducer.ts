@@ -12,7 +12,7 @@ export const DEFAULT_SNK_REDUCER: SnackbarReducer = {
   message: "Snackbar message not set",
 };
 
-export function snackbarReducer(
+export function snackbarReducerFunction(
   state: SnackbarReducer,
   action: SnackbarReducerAction,
 ): SnackbarReducer {

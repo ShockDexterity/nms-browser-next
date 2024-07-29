@@ -10,7 +10,7 @@ export const DEFAULT_SYL_REDUCER: SystemListReducer = {
   systemList: [],
 };
 
-export function systemListReducer(
+export function systemListReducerFunction(
   state: SystemListReducer,
   action: SystemListReducerAction,
 ): SystemListReducer {
