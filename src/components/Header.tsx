@@ -2,12 +2,12 @@
 import { Box, /* Breadcrumbs, */ Link, Typography } from "@mui/material";
 // import { usePathname } from "next/navigation";
 
-type HeaderProps = {
+type Props = {
   title: string;
   subtitle?: string;
 };
 
-export default function Header({ title, subtitle = "" }: HeaderProps) {
+export default function Header({ title, subtitle = "" }: Props) {
   // const pathname = usePathname();
 
   return (
