@@ -20,7 +20,8 @@ export type GeneralReducerAction = {
 };
 
 export type DialogReducer = {
-  display: string;
+  show: boolean;
+  display: "" | "DETAILS" | "ADD_FORM" | "EDIT_FORM";
   title: string;
   planet: Planet;
   system: System;
@@ -34,7 +35,7 @@ export type DialogReducerAction = {
     | "CLOSE_DIALOG"
     | "SAVE";
   payload: {
-    _for: "planet" | "system";
+    _for: "" | "planet" | "system";
     title?: string;
     planet?: Planet;
     system?: System;

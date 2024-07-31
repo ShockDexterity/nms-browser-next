@@ -7,6 +7,7 @@ export const DialogDispatchContext = createContext<
 >(null!);
 
 export const DEFAULT_DLG_REDUCER: DialogReducer = {
+  show: false,
   display: "",
   title: "",
   planet: null!,
@@ -19,27 +20,27 @@ export function dialogReducerFunction(
 ): DialogReducer {
   switch (action.type) {
     case "SHOW_DETAILS_DIALOG": {
-      const { _for, title } = action.payload;
+      const { title } = action.payload;
       if (!title) {
         throw new Error("You must specify the title for the dialog");
       }
-      return { ...state, title, display: `${_for}_details` };
+      return { ...state, title, display: "DETAILS" };
     }
 
     case "SHOW_ADD_DIALOG": {
-      const { _for, title } = action.payload;
+      const { title } = action.payload;
       if (!title) {
         throw new Error("You must specify the title for the dialog");
       }
-      return { ...state, title, display: `add_${_for}` };
+      return { ...state, title, display: "ADD_FORM" };
     }
 
     case "SHOW_EDIT_DIALOG": {
-      const { _for, title } = action.payload;
+      const { title } = action.payload;
       if (!title) {
         throw new Error("You must specify the title for the dialog");
       }
-      return { ...state, title, display: `edit_${_for}` };
+      return { ...state, title, display: "EDIT_FORM" };
     }
 
     case "CLOSE_DIALOG":
