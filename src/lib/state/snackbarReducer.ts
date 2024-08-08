@@ -25,11 +25,17 @@ export function snackbarReducerFunction(
 
     case "SET_SNACKBAR_SEVERITY": {
       const { severity } = action.payload;
+      if (!severity) {
+        throw new Error("Must provide snackbar severity level");
+      }
       return { ...state, severity };
     }
 
     case "SET_SNACKBAR_MESSAGE": {
       const { message } = action.payload;
+      if (!message || message === "") {
+        throw new Error("Must provide snackbar message");
+      }
       return { ...state, message };
     }
 

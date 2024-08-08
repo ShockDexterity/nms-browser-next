@@ -1,24 +1,5 @@
 import { Planet, PlanetFilters, System, SystemFilters } from "../types";
 
-export type GeneralReducer = {
-  savedPlanet: Planet | null;
-  savedSystem: System | null;
-  systemList: System[];
-  refreshPlanets: boolean;
-  refreshSystems: boolean;
-};
-
-export type GeneralReducerAction = {
-  type: string;
-  payload: {
-    planet?: Planet;
-    system?: System;
-    systemList?: System[];
-    refreshPlanets: boolean;
-    refreshSystems: boolean;
-  };
-};
-
 export type DialogReducer = {
   show: boolean;
   display: "" | "DETAILS" | "ADD_FORM" | "EDIT_FORM";
@@ -79,14 +60,18 @@ export type SystemListReducerAction = {
 
 export type SnackbarReducer = {
   show: boolean;
-  severity: string;
+  severity: "success" | "warning" | "error";
   message: string;
 };
 
 export type SnackbarReducerAction = {
-  type: string;
+  type:
+    | "SHOW_SNACKBAR"
+    | "HIDE_SNACKBAR"
+    | "SET_SNACKBAR_SEVERITY"
+    | "SET_SNACKBAR_MESSAGE";
   payload: {
-    severity: string;
-    message: string;
+    severity?: "success" | "warning" | "error";
+    message?: string;
   };
 };

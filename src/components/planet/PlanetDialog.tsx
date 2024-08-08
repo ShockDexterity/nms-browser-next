@@ -15,10 +15,9 @@ type Props = Readonly<{
   children: React.ReactNode;
 }>;
 
-export default function CustomDialog({ children }: Props) {
-  const reducer = useDialogReducer();
-  const { show, display, planet, title } = reducer;
-  const dispatch = useDialogDispatch();
+export default function PlanetDialog({ children }: Props) {
+  const { show, display, planet, title } = useDialogReducer();
+  const dialogDispatch = useDialogDispatch();
 
   const handleAddSubmit = (event: React.FormEvent<HTMLFormElement>) => {};
 
@@ -41,7 +40,7 @@ export default function CustomDialog({ children }: Props) {
   };
 
   const handleClose = () => {
-    dispatch({ type: "CLOSE_DIALOG", payload: { _for: "" } });
+    dialogDispatch({ type: "CLOSE_DIALOG", payload: { _for: "" } });
   };
 
   if (display === "DETAILS") {

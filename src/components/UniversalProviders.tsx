@@ -2,18 +2,17 @@
 import React from "react";
 
 import {
-  DEFAULT_DLG_REDUCER,
-  DialogDispatchContext,
-  DialogReducerContext,
-  dialogReducerFunction,
-} from "@/lib/state/dialogReducer";
-
-import {
   DEFAULT_SYL_REDUCER,
   SystemListDispatchContext,
   systemListReducerFunction,
   SystemListReducerContext,
 } from "@/lib/state/systemListReducer";
+import {
+  DEFAULT_SNK_REDUCER,
+  SnackbarDispatchContext,
+  SnackbarReducerContext,
+  snackbarReducerFunction,
+} from "@/lib/state/snackbarReducer";
 
 type Props = Readonly<{
   children: React.ReactNode;
@@ -25,19 +24,19 @@ export default function UniversalProviders({ children }: Props) {
     DEFAULT_SYL_REDUCER,
   );
 
-  const [dialogReducer, dialogDispatch] = React.useReducer(
-    dialogReducerFunction,
-    DEFAULT_DLG_REDUCER,
+  const [snackbarReducer, snackbarDispatch] = React.useReducer(
+    snackbarReducerFunction,
+    DEFAULT_SNK_REDUCER,
   );
 
   return (
     <SystemListReducerContext.Provider value={systemListReducer}>
       <SystemListDispatchContext.Provider value={systemListDispatch}>
-        <DialogReducerContext.Provider value={dialogReducer}>
-          <DialogDispatchContext.Provider value={dialogDispatch}>
+        <SnackbarReducerContext.Provider value={snackbarReducer}>
+          <SnackbarDispatchContext.Provider value={snackbarDispatch}>
             {children}
-          </DialogDispatchContext.Provider>
-        </DialogReducerContext.Provider>
+          </SnackbarDispatchContext.Provider>
+        </SnackbarReducerContext.Provider>
       </SystemListDispatchContext.Provider>
     </SystemListReducerContext.Provider>
   );

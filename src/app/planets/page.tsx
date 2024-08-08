@@ -3,7 +3,7 @@ import React from "react";
 
 import { Button, Divider, Grid } from "@mui/material";
 
-import PlanetCard from "@/components/PlanetCard";
+import PlanetCard from "@/components/planet/PlanetCard";
 
 import {
   DEFAULT_PLN_REDUCER,
@@ -13,6 +13,16 @@ import {
 } from "@/lib/state/planetReducer";
 
 import { Planet /*, System */ } from "@/lib/types";
+
+import {
+  DEFAULT_DLG_REDUCER,
+  DialogDispatchContext,
+  DialogReducerContext,
+  dialogReducerFunction,
+} from "@/lib/state/dialogReducer";
+import PlanetDialog from "@/components/planet/PlanetDialog";
+import PlanetDetails from "@/components/planet/PlanetDetails";
+
 // import { SystemListReducerAction } from "@/lib/state/types";
 // import { useSystemListDispatch, useSystemListReducer } from "@/lib/customHooks";
 
@@ -42,26 +52,41 @@ export default function PlanetPage() {
   }, [planetReducer.refresh]);
   // }, [planetReducer.refresh, systemList, systemListDispatch]);
 
+  const [dialogReducer, dialogDispatch] = React.useReducer(
+    dialogReducerFunction,
+    DEFAULT_DLG_REDUCER,
+  );
+
   if (planets.length === 0) {
-    return <></>;
+    return <React.Fragment></React.Fragment>;
   }
 
   return (
     <PlanetReducerContext.Provider value={planetReducer}>
       <PlanetDispatchContext.Provider value={planetDispatch}>
-        <Grid container spacing={2}>
-          {planets.map((planet) => {
-            return <PlanetCard key={planet._id} planet={planet}></PlanetCard>;
-          })}
-        </Grid>
+        <DialogReducerContext.Provider value={dialogReducer}>
+          <DialogDispatchContext.Provider value={dialogDispatch}>
+            <Grid container spacing={2}>
+              {planets.map((planet) => {
+                return (
+                  <PlanetCard key={planet._id} planet={planet}></PlanetCard>
+                );
+              })}
+            </Grid>
 
-        <Divider sx={{ py: 2, mb: 2 }} />
+            <Divider sx={{ py: 2, mb: 2 }} />
 
-        <Button
-          onClick={() => planetDispatch({ type: "REFRESHED", payload: {} })}
-        >
-          Refresh
-        </Button>
+            <Button
+              onClick={() => planetDispatch({ type: "REFRESHED", payload: {} })}
+            >
+              Refresh
+            </Button>
+
+            <PlanetDialog>
+              {dialogReducer.display === "DETAILS" && <PlanetDetails />}
+            </PlanetDialog>
+          </DialogDispatchContext.Provider>
+        </DialogReducerContext.Provider>
       </PlanetDispatchContext.Provider>
     </PlanetReducerContext.Provider>
   );

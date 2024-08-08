@@ -3,7 +3,7 @@ import React from "react";
 
 import { Button, Divider, Grid } from "@mui/material";
 
-import SystemCard from "@/components/SystemCard";
+import SystemCard from "@/components/system/SystemCard";
 
 import { System } from "@/lib/types";
 import { useSystemListDispatch } from "@/lib/customHooks";
@@ -51,11 +51,11 @@ export default function PlanetPage() {
   }, [refresh, systemListDispatch]);
 
   if (systems.length === 0) {
-    return <></>;
+    return <React.Fragment></React.Fragment>;
   }
 
   return (
-    <>
+    <React.Fragment>
       <Grid container spacing={2}>
         {systems.map((system) => {
           return <SystemCard key={system._id} system={system}></SystemCard>;
@@ -65,6 +65,6 @@ export default function PlanetPage() {
       <Divider sx={{ py: 2, mb: 2 }} />
 
       <Button onClick={() => setRefresh(true)}>Refresh</Button>
-    </>
+    </React.Fragment>
   );
 }

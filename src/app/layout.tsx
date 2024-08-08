@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 
 import theme from "@/lib/theme";
 import UniversalProviders from "@/components/UniversalProviders";
+import AlertSnackbar from "@/components/AlertSnackbar";
 
 export default function RootLayout({
   children,
@@ -17,11 +18,15 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Container>
-              <Header title="No Man's Sky Discovery Browser" />
+            <UniversalProviders>
+              <Container>
+                <Header title="No Man's Sky Discovery Browser" />
 
-              <UniversalProviders>{children}</UniversalProviders>
-            </Container>
+                {children}
+              </Container>
+
+              <AlertSnackbar />
+            </UniversalProviders>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

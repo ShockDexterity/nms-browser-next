@@ -13,11 +13,11 @@ import {
 
 import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
 
-import SentinelText from "./SentinelText";
+import SentinelText from "../SentinelText";
 
 import { Planet } from "@/lib/types";
 import { getBiomeBorder, getDescriptor } from "@/lib/customFunctions";
-import { useDialogDispatch } from "@/lib/customHooks";
+import { useDialogDispatch, useSnackbarDispatch } from "@/lib/customHooks";
 
 type Props = {
   planet: Planet;
@@ -26,8 +26,11 @@ type Props = {
 export default function PlanetCard({ planet }: Props) {
   const dialogDispatch = useDialogDispatch();
 
+  const snackbarDispatch = useSnackbarDispatch();
+
   const handleDetailsClick = (event: React.SyntheticEvent) => {
     event.preventDefault();
+
     dialogDispatch({ type: "SAVE", payload: { _for: "planet", planet } });
     dialogDispatch({
       type: "SHOW_DETAILS_DIALOG",
@@ -36,11 +39,27 @@ export default function PlanetCard({ planet }: Props) {
   };
 
   const handleEditClick = (event: React.SyntheticEvent) => {
-    console.log("Edit Not Yet Implemented");
+    snackbarDispatch({
+      type: "SET_SNACKBAR_SEVERITY",
+      payload: { severity: "warning" },
+    });
+    snackbarDispatch({
+      type: "SET_SNACKBAR_MESSAGE",
+      payload: { message: "Edit Not Yet Implemented" },
+    });
+    snackbarDispatch({ type: "SHOW_SNACKBAR", payload: {} });
   };
 
   const handleDeleteClick = (event: React.SyntheticEvent) => {
-    console.log("Delete Not Yet Implemented");
+    snackbarDispatch({
+      type: "SET_SNACKBAR_SEVERITY",
+      payload: { severity: "warning" },
+    });
+    snackbarDispatch({
+      type: "SET_SNACKBAR_MESSAGE",
+      payload: { message: "Delete Not Yet Implemented" },
+    });
+    snackbarDispatch({ type: "SHOW_SNACKBAR", payload: {} });
   };
 
   return (
