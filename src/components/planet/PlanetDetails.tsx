@@ -2,7 +2,7 @@ import React from "react";
 
 import { Divider, Typography } from "@mui/material";
 
-import SentinelText from "../SentinelText";
+import SentinelText from "./SentinelText";
 
 import { DialogReducerContext } from "@/lib/state/dialogReducer";
 import { getBiomeBorder } from "@/lib/customFunctions";

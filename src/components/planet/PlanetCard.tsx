@@ -13,7 +13,7 @@ import {
 
 import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
 
-import SentinelText from "../SentinelText";
+import SentinelText from "./SentinelText";
 
 import { Planet } from "@/lib/types";
 import { getBiomeBorder, getDescriptor } from "@/lib/customFunctions";
