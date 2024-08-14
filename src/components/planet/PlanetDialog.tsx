@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 import {
@@ -8,8 +9,14 @@ import {
   DialogTitle,
 } from "@mui/material";
 
-import { useDialogDispatch, useDialogReducer } from "@/lib/customHooks";
+import {
+  useDialogDispatch,
+  useDialogReducer,
+  useSnackbarDispatch,
+} from "@/lib/customHooks";
 import { getBiomeBorder } from "@/lib/customFunctions";
+
+import { APIFailure, APISuccess } from "@/lib/types";
 
 type Props = Readonly<{
   children: React.ReactNode;
@@ -19,20 +26,44 @@ export default function PlanetDialog({ children }: Props) {
   const { show, display, planet, title } = useDialogReducer();
   const dialogDispatch = useDialogDispatch();
 
-  const handleAddSubmit = (event: React.FormEvent<HTMLFormElement>) => {};
+  const snackbarDispatch = useSnackbarDispatch();
 
-  const handleEditSubmit = (event: React.FormEvent<HTMLFormElement>) => {};
+  const updateSnackbar = (
+    severity: "success" | "warning" | "error",
+    message: string,
+  ) => {
+    snackbarDispatch({ type: "HIDE_SNACKBAR", payload: {} });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    snackbarDispatch({
+      type: "SET_SNACKBAR_SEVERITY",
+      payload: { severity },
+    });
+
+    snackbarDispatch({
+      type: "SET_SNACKBAR_MESSAGE",
+      payload: { message },
+    });
+
+    snackbarDispatch({ type: "SHOW_SNACKBAR", payload: {} });
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const form = event.currentTarget;
+    const rawFormData = new FormData(form);
+    const formData = Object.fromEntries(rawFormData.entries());
+
     if (display === "ADD_FORM") {
-      handleAddSubmit(event);
+      await handleAddSubmit(formData, updateSnackbar);
+      form.reset();
     } else if (display === "EDIT_FORM") {
-      handleEditSubmit(event);
+      await handleEditSubmit(planet._id, formData, updateSnackbar);
+      form.reset();
     } else if (display === "DETAILS") {
       // nothing should happen, but you shouldn't be here anyway
     } else {
-      // you shouldn't be here
+      // you REALLY shouldn't be here
       throw new Error(
         "You tried to submit from something that shouldn't be submitting",
       );
@@ -85,6 +116,91 @@ export default function PlanetDialog({ children }: Props) {
           <Button type="submit">Submit</Button>
         </DialogActions>
       </Dialog>
+    );
+  }
+}
+
+async function handleAddSubmit(
+  formData: Object,
+  updateSnackbar: (
+    severity: "success" | "warning" | "error",
+    message: string,
+  ) => void,
+) {
+  const stringifiedData = JSON.stringify(formData);
+  try {
+    const apiResponse = await fetch("./api/planets", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: stringifiedData,
+    });
+
+    const response: APISuccess | APIFailure = await apiResponse.json();
+
+    if (response.error) {
+      // edit failed
+      updateSnackbar("error", response.msg);
+    } else if (response.success) {
+      // edit succeeded
+      if (response.warn) {
+        // edit succeeded but has a warning
+        updateSnackbar("warning", response.msg);
+      } else {
+        // edit succeeded without a warning
+        updateSnackbar("success", response.msg);
+      }
+    }
+  } catch (error: unknown) {
+    console.error(error);
+    updateSnackbar(
+      "error",
+      "Unable to add planet. Check the console for more information",
+    );
+  }
+}
+
+async function handleEditSubmit(
+  _id: string,
+  formData: Object,
+  updateSnackbar: (
+    severity: "success" | "warning" | "error",
+    message: string,
+  ) => void,
+) {
+  const stringifiedData = JSON.stringify({ _id, ...formData });
+  try {
+    const apiResponse = await fetch(`./api/planets/${_id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: stringifiedData,
+    });
+
+    const response: APISuccess | APIFailure = await apiResponse.json();
+
+    if (response.error) {
+      // edit failed
+      updateSnackbar("error", response.msg);
+    } else if (response.success) {
+      // edit succeeded
+      if (response.warn) {
+        // edit succeeded but has a warning
+        updateSnackbar("warning", response.msg);
+      } else {
+        // edit succeeded without a warning
+        updateSnackbar("success", response.msg);
+      }
+    }
+  } catch (error: unknown) {
+    console.error(error);
+    updateSnackbar(
+      "error",
+      "Unable to edit planet. Check the console for more information",
     );
   }
 }
