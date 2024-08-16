@@ -117,7 +117,7 @@ export default function PlanetDialog({ children }: Props) {
           onSubmit: handleSubmit,
         }}
       >
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle textAlign="center">{title}</DialogTitle>
 
         <DialogContent>{children}</DialogContent>
 
