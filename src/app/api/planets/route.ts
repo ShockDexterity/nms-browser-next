@@ -13,7 +13,7 @@ export async function GET(request: Request) {
   return NextResponse.json(planets);
 }
 
-export async function PUT(request: Request) {
+export async function POST(request: Request) {
   const data = await request.json();
 
   const [err, planet] = validatePlanet(data);
