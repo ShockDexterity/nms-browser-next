@@ -1,9 +1,18 @@
 "use client";
 import React from "react";
 
-import { Button, Divider, Grid } from "@mui/material";
+import {
+  Button,
+  Divider,
+  Fab as FloatingActionButton,
+  Grid,
+} from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
 
+import PlanetAddForm from "@/components/planet/PlanetAddForm";
 import PlanetCard from "@/components/planet/PlanetCard";
+import PlanetDialog from "@/components/planet/PlanetDialog";
+import PlanetDetails from "@/components/planet/PlanetDetails";
 
 import {
   DEFAULT_PLN_REDUCER,
@@ -12,7 +21,7 @@ import {
   PlanetReducerContext,
 } from "@/lib/state/planetReducer";
 
-import { Planet /*, System */ } from "@/lib/types";
+import { Planet } from "@/lib/types";
 
 import {
   DEFAULT_DLG_REDUCER,
@@ -20,11 +29,8 @@ import {
   DialogReducerContext,
   dialogReducerFunction,
 } from "@/lib/state/dialogReducer";
-import PlanetDialog from "@/components/planet/PlanetDialog";
-import PlanetDetails from "@/components/planet/PlanetDetails";
 
-// import { SystemListReducerAction } from "@/lib/state/types";
-// import { useSystemListDispatch, useSystemListReducer } from "@/lib/customHooks";
+const fabSX = { position: "absolute", bottom: 16, right: 16 };
 
 export default function PlanetPage() {
   const [planets, setPlanets] = React.useState<Planet[]>([]);
@@ -34,28 +40,24 @@ export default function PlanetPage() {
     DEFAULT_PLN_REDUCER,
   );
 
-  // const { systemList } = useSystemListReducer();
-  // const systemListDispatch = useSystemListDispatch();
-
   React.useEffect(() => {
     if (planetReducer.refresh) {
-      // if (systemList.length === 0) {
-      //   window.alert('please hit the "refresh" button');
-      //   fetchSystems(systemListDispatch);
-      // } else {
-      //   console.log(systemList);
-      // }
-
       fetchPlanets(setPlanets);
       planetDispatch({ type: "REFRESHED", payload: {} });
     }
   }, [planetReducer.refresh]);
-  // }, [planetReducer.refresh, systemList, systemListDispatch]);
 
   const [dialogReducer, dialogDispatch] = React.useReducer(
     dialogReducerFunction,
     DEFAULT_DLG_REDUCER,
   );
+
+  const handleFabClick = () => {
+    dialogDispatch({
+      type: "SHOW_ADD_DIALOG",
+      payload: { _for: "planet", title: "Add a Planet" },
+    });
+  };
 
   if (planets.length === 0) {
     return <React.Fragment></React.Fragment>;
@@ -82,7 +84,16 @@ export default function PlanetPage() {
               Refresh
             </Button>
 
+            <FloatingActionButton
+              color="primary"
+              sx={fabSX}
+              onClick={handleFabClick}
+            >
+              <AddIcon />
+            </FloatingActionButton>
+
             <PlanetDialog>
+              {dialogReducer.display === "ADD_FORM" && <PlanetAddForm />}
               {dialogReducer.display === "DETAILS" && <PlanetDetails />}
             </PlanetDialog>
           </DialogDispatchContext.Provider>
@@ -97,7 +108,7 @@ const fetchPlanets = async (
 ) => {
   try {
     const response = await fetch("./api/planets", { method: "GET" });
-    const data = await response.json();
+    const data: Planet[] = await response.json();
     setPlanets(data);
   } catch (err) {
     console.error(err);

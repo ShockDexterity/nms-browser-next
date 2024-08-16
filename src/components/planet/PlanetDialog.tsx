@@ -66,9 +66,15 @@ export default function PlanetDialog({ children }: Props) {
     };
 
     if (display === "ADD_FORM") {
-      await handleAddSubmit(form, updateSnackbar, refreshPlanets);
+      if (await handleAddSubmit(form, updateSnackbar, refreshPlanets)) {
+        handleClose();
+      }
     } else if (display === "EDIT_FORM") {
-      await handleEditSubmit(form, planet._id, updateSnackbar, refreshPlanets);
+      if (
+        await handleEditSubmit(form, planet._id, updateSnackbar, refreshPlanets)
+      ) {
+        handleClose();
+      }
     } else if (display === "DETAILS") {
       // nothing should happen, but you shouldn't be here anyway
       // don't want/need to throw an error
@@ -151,29 +157,32 @@ async function handleAddSubmit(
       body: stringifiedData,
     });
 
-    const response: APISuccess | APIFailure = await apiResponse.json();
+    const response = await apiResponse.json();
 
     if (response.error) {
       // add failed
-      updateSnackbar("error", response.msg);
-    } else if (response.success) {
-      // add succeeded
-      if (response.warn) {
-        // add succeeded but has a warning
-        updateSnackbar("warning", response.msg);
-      } else {
-        // add succeeded without a warning
-        updateSnackbar("success", response.msg);
-      }
-      refreshPlanets();
-      form.reset();
+      updateSnackbar("error", response.error);
+      return false;
     }
+
+    // add succeeded
+    if (response.warn) {
+      // add succeeded but has a warning
+      updateSnackbar("warning", `${response.msg}: ${apiResponse.status}`);
+    } else {
+      // add succeeded without a warning
+      updateSnackbar("success", `${response.msg}: ${apiResponse.status}`);
+    }
+    refreshPlanets();
+    form.reset();
+    return true;
   } catch (error: unknown) {
     console.error(error);
     updateSnackbar(
       "error",
       "Unable to add planet. Check the console for more information",
     );
+    return false;
   }
 }
 
@@ -204,23 +213,25 @@ async function handleEditSubmit(
     if (response.error) {
       // edit failed
       updateSnackbar("error", response.msg);
-    } else if (response.success) {
-      // edit succeeded
-      if (response.warn) {
-        // edit succeeded but has a warning
-        updateSnackbar("warning", response.msg);
-      } else {
-        // edit succeeded without a warning
-        updateSnackbar("success", response.msg);
-      }
-      refreshPlanets();
-      form.reset();
+      return false;
     }
+    // edit succeeded
+    if (response.warn) {
+      // edit succeeded but has a warning
+      updateSnackbar("warning", response.msg);
+    } else {
+      // edit succeeded without a warning
+      updateSnackbar("success", response.msg);
+    }
+    refreshPlanets();
+    form.reset();
+    return true;
   } catch (error: unknown) {
     console.error(error);
     updateSnackbar(
       "error",
       "Unable to edit planet. Check the console for more information",
     );
+    return false;
   }
 }

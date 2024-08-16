@@ -6,14 +6,11 @@ import { Button, Divider, Grid } from "@mui/material";
 import SystemCard from "@/components/system/SystemCard";
 
 import { System } from "@/lib/types";
-import { useSystemListDispatch } from "@/lib/customHooks";
 
 export default function PlanetPage() {
   const [systems, setSystems] = React.useState<System[]>([]);
 
   const [refresh, setRefresh] = React.useState<boolean>(true);
-
-  const systemListDispatch = useSystemListDispatch();
 
   React.useEffect(() => {
     const fetchSystems = async () => {
@@ -21,21 +18,6 @@ export default function PlanetPage() {
         const response = await fetch("./api/systems", { method: "GET" });
         const data: System[] = await response.json();
         setSystems(data);
-
-        const sortedData = data
-          .map((value) => {
-            return value.name;
-          })
-          .sort((a, b) => {
-            return a.localeCompare(b);
-          });
-
-        systemListDispatch({
-          type: "SET_LIST",
-          payload: {
-            systemList: sortedData,
-          },
-        });
       } catch (err) {
         console.error(err);
         window.alert("Unable to retrieve data");
@@ -48,7 +30,7 @@ export default function PlanetPage() {
 
       setRefresh(false);
     }
-  }, [refresh, systemListDispatch]);
+  }, [refresh]);
 
   if (systems.length === 0) {
     return <React.Fragment></React.Fragment>;

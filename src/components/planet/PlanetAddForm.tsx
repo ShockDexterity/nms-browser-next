@@ -14,8 +14,6 @@ import {
 import FormBox from "../FormBox";
 import MyAutocomplete from "../MyAutocomplete";
 
-import { useSystemListReducer } from "@/lib/customHooks";
-
 import {
   agriculturalResources,
   biomeDescriptors,
@@ -23,11 +21,36 @@ import {
   localResources,
   stellarMetals,
 } from "@/lib/lists";
+import { System } from "@/lib/types";
 
 export default function PlanetAddForm() {
-  const { systemList } = useSystemListReducer();
+  const [systemList, setSystemList] = React.useState<string[]>([]);
 
   const sLabelID = React.useId();
+
+  React.useEffect(() => {
+    const fetchSystems = async () => {
+      try {
+        const response = await fetch("./api/systems", { method: "GET" });
+        const data: System[] = await response.json();
+
+        setSystemList(
+          data
+            .map((value) => {
+              return value.name;
+            })
+            .sort((a, b) => {
+              return a.localeCompare(b);
+            }),
+        );
+      } catch (err) {
+        console.error(err);
+        window.alert("Unable to retrieve data");
+      }
+    };
+
+    fetchSystems();
+  }, []);
 
   return (
     <React.Fragment>
