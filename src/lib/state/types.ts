@@ -25,7 +25,7 @@ export type DialogReducerAction = {
 
 export type PlanetReducer = {
   refresh: boolean;
-  planet: Planet | null;
+  planet: Planet;
 };
 
 export type PlanetReducerAction = {
@@ -37,7 +37,7 @@ export type PlanetReducerAction = {
 
 export type SystemReducer = {
   refresh: boolean;
-  system: System | null;
+  system: System;
 };
 
 export type SystemReducerAction = {

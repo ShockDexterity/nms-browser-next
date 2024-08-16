@@ -8,7 +8,7 @@ export const SystemDispatchContext = createContext<
 
 export const DEFAULT_SYS_REDUCER: SystemReducer = {
   refresh: true,
-  system: null,
+  system: null!,
 };
 
 export function systemReducerFunction(

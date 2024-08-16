@@ -8,7 +8,7 @@ export const PlanetDispatchContext = createContext<
 
 export const DEFAULT_PLN_REDUCER: PlanetReducer = {
   refresh: true,
-  planet: null,
+  planet: null!,
 };
 
 export function planetReducerFunction(
