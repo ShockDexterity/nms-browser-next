@@ -4,11 +4,11 @@ import { Divider, Typography } from "@mui/material";
 
 import SentinelText from "./SentinelText";
 
-import { DialogReducerContext } from "@/lib/state/dialogReducer";
 import { getBiomeBorder } from "@/lib/customFunctions";
+import { usePlanetReducer } from "@/lib/customHooks";
 
 export default function PlanetDetails() {
-  const { planet } = React.useContext(DialogReducerContext);
+  const { planet } = usePlanetReducer();
 
   return (
     <React.Fragment>

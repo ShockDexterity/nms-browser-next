@@ -12,6 +12,8 @@ import {
 import {
   useDialogDispatch,
   useDialogReducer,
+  usePlanetDispatch,
+  usePlanetReducer,
   useSnackbarDispatch,
 } from "@/lib/customHooks";
 import { getBiomeBorder } from "@/lib/customFunctions";
@@ -23,8 +25,11 @@ type Props = Readonly<{
 }>;
 
 export default function PlanetDialog({ children }: Props) {
-  const { show, display, planet, title } = useDialogReducer();
+  const { show, display, title } = useDialogReducer();
   const dialogDispatch = useDialogDispatch();
+
+  const { planet } = usePlanetReducer();
+  const planetDispatch = usePlanetDispatch();
 
   const snackbarDispatch = useSnackbarDispatch();
 
@@ -51,17 +56,22 @@ export default function PlanetDialog({ children }: Props) {
     event.preventDefault();
 
     const form = event.currentTarget;
-    const rawFormData = new FormData(form);
-    const formData = Object.fromEntries(rawFormData.entries());
+
+    if (!form && display !== "DETAILS") {
+      throw new Error("Cannot find form to submit");
+    }
+
+    const refreshPlanets = () => {
+      planetDispatch({ type: "REFRESH", payload: {} });
+    };
 
     if (display === "ADD_FORM") {
-      await handleAddSubmit(formData, updateSnackbar);
-      form.reset();
+      await handleAddSubmit(form, updateSnackbar, refreshPlanets);
     } else if (display === "EDIT_FORM") {
-      await handleEditSubmit(planet._id, formData, updateSnackbar);
-      form.reset();
+      await handleEditSubmit(form, planet._id, updateSnackbar, refreshPlanets);
     } else if (display === "DETAILS") {
       // nothing should happen, but you shouldn't be here anyway
+      // don't want/need to throw an error
     } else {
       // you REALLY shouldn't be here
       throw new Error(
@@ -121,13 +131,16 @@ export default function PlanetDialog({ children }: Props) {
 }
 
 async function handleAddSubmit(
-  formData: Object,
+  form: EventTarget & HTMLFormElement,
   updateSnackbar: (
     severity: "success" | "warning" | "error",
     message: string,
   ) => void,
+  refreshPlanets: () => void,
 ) {
+  const formData = Object.fromEntries(new FormData(form).entries());
   const stringifiedData = JSON.stringify(formData);
+
   try {
     const apiResponse = await fetch("./api/planets", {
       method: "POST",
@@ -141,17 +154,19 @@ async function handleAddSubmit(
     const response: APISuccess | APIFailure = await apiResponse.json();
 
     if (response.error) {
-      // edit failed
+      // add failed
       updateSnackbar("error", response.msg);
     } else if (response.success) {
-      // edit succeeded
+      // add succeeded
       if (response.warn) {
-        // edit succeeded but has a warning
+        // add succeeded but has a warning
         updateSnackbar("warning", response.msg);
       } else {
-        // edit succeeded without a warning
+        // add succeeded without a warning
         updateSnackbar("success", response.msg);
       }
+      refreshPlanets();
+      form.reset();
     }
   } catch (error: unknown) {
     console.error(error);
@@ -163,14 +178,17 @@ async function handleAddSubmit(
 }
 
 async function handleEditSubmit(
+  form: EventTarget & HTMLFormElement,
   _id: string,
-  formData: Object,
   updateSnackbar: (
     severity: "success" | "warning" | "error",
     message: string,
   ) => void,
+  refreshPlanets: () => void,
 ) {
+  const formData = Object.fromEntries(new FormData(form).entries());
   const stringifiedData = JSON.stringify({ _id, ...formData });
+
   try {
     const apiResponse = await fetch(`./api/planets/${_id}`, {
       method: "PUT",
@@ -195,6 +213,8 @@ async function handleEditSubmit(
         // edit succeeded without a warning
         updateSnackbar("success", response.msg);
       }
+      refreshPlanets();
+      form.reset();
     }
   } catch (error: unknown) {
     console.error(error);
