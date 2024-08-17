@@ -52,6 +52,10 @@ export default function PlanetDialog({ children }: Props) {
     snackbarDispatch({ type: "SHOW_SNACKBAR", payload: {} });
   };
 
+  const refreshPlanets = () => {
+    planetDispatch({ type: "REFRESH", payload: {} });
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -60,10 +64,6 @@ export default function PlanetDialog({ children }: Props) {
     if (!form && display !== "DETAILS") {
       throw new Error("Cannot find form to submit");
     }
-
-    const refreshPlanets = () => {
-      planetDispatch({ type: "REFRESH", payload: {} });
-    };
 
     if (display === "ADD_FORM") {
       if (await handleAddSubmit(form, updateSnackbar, refreshPlanets)) {
@@ -162,7 +162,7 @@ async function handleAddSubmit(
     if (response.error) {
       // add failed
       updateSnackbar("error", response.error);
-      return false;
+      return false; // bad
     }
 
     // add succeeded
@@ -175,15 +175,15 @@ async function handleAddSubmit(
     }
     refreshPlanets();
     form.reset();
-    return true;
+    return true; // good
   } catch (error: unknown) {
     console.error(error);
     updateSnackbar(
       "error",
       "Unable to add planet. Check the console for more information",
     );
-    return false;
   }
+  return false; // bad
 }
 
 async function handleEditSubmit(
@@ -213,7 +213,7 @@ async function handleEditSubmit(
     if (response.error) {
       // edit failed
       updateSnackbar("error", response.msg);
-      return false;
+      return false; // bad
     }
     // edit succeeded
     if (response.warn) {
@@ -225,13 +225,13 @@ async function handleEditSubmit(
     }
     refreshPlanets();
     form.reset();
-    return true;
+    return true; // good
   } catch (error: unknown) {
     console.error(error);
     updateSnackbar(
       "error",
       "Unable to edit planet. Check the console for more information",
     );
-    return false;
   }
+  return false; // bad
 }
