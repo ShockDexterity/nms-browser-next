@@ -26,7 +26,7 @@ import { System } from "@/lib/types";
 export default function PlanetAddForm() {
   const [systemList, setSystemList] = React.useState<string[]>([]);
 
-  const sLabelID = React.useId();
+  const SentinelLabelId = React.useId();
 
   React.useEffect(() => {
     const fetchSystems = async () => {
@@ -107,14 +107,14 @@ export default function PlanetAddForm() {
       <Divider sx={{ my: 0.5 }} />
 
       <FormBox>
-        <FormLabel id={sLabelID}>Sentinel Presence</FormLabel>
+        <FormLabel id={SentinelLabelId}>Sentinel Presence</FormLabel>
       </FormBox>
       <FormBox>
         <RadioGroup
           row
           defaultValue="low"
           name="sentinels"
-          aria-labelledby={sLabelID}
+          aria-labelledby={SentinelLabelId}
         >
           <FormControlLabel label="Low" value="low" control={<Radio />} />
           <FormControlLabel label="High" value="high" control={<Radio />} />
