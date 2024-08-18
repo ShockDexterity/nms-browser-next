@@ -11,8 +11,9 @@ import { Add as AddIcon } from "@mui/icons-material";
 
 import PlanetAddForm from "@/components/planet/PlanetAddForm";
 import PlanetCard from "@/components/planet/PlanetCard";
-import PlanetDialog from "@/components/planet/PlanetDialog";
 import PlanetDetails from "@/components/planet/PlanetDetails";
+import PlanetDialog from "@/components/planet/PlanetDialog";
+import PlanetEditForm from "@/components/planet/PlanetEditForm";
 
 import {
   DEFAULT_PLN_REDUCER,
@@ -93,8 +94,9 @@ export default function PlanetPage() {
             </FloatingActionButton>
 
             <PlanetDialog>
-              {dialogReducer.display === "ADD_FORM" && <PlanetAddForm />}
               {dialogReducer.display === "DETAILS" && <PlanetDetails />}
+              {dialogReducer.display === "ADD_FORM" && <PlanetAddForm />}
+              {dialogReducer.display === "EDIT_FORM" && <PlanetEditForm />}
             </PlanetDialog>
           </DialogDispatchContext.Provider>
         </DialogReducerContext.Provider>
