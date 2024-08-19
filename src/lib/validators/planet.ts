@@ -1,14 +1,43 @@
 import { Planet } from "../types";
 
-interface Submission {}
+type AddSubmission = {
+  name: string;
+  system: string;
+  descriptor: string;
+  moon?: string | boolean;
+  agricultural: string;
+  stellar: string;
+  local: string;
+  general: string;
+  sentinels: string;
+};
 
-interface ErrResponse {
-  status: number;
-  msg: string;
+export function validatePlanetAddition(submission: AddSubmission): {
+  error?: {
+    status: number;
+    msg: string;
+  };
+  planet?: Planet;
+  warning?: string;
+} {
+  console.log(submission);
+
+  return { error: { status: 501, msg: "Not Yet Implemented" } };
 }
 
-export function validatePlanet(
-  submission: Submission,
-): [err: ErrResponse | null, planet?: Planet] {
-  return [{ status: 501, msg: "Not Yet Implemented" }];
+type EditSubmission = AddSubmission & {
+  biome: string;
+};
+
+export function validatePlanetEdit(submission: EditSubmission): {
+  error?: {
+    status: number;
+    msg: string;
+  };
+  planet?: Planet;
+  warning?: string;
+} {
+  console.log(submission);
+
+  return { error: { status: 501, msg: "Not Yet Implemented" } };
 }

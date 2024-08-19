@@ -80,7 +80,7 @@ export default function PlanetAddForm() {
       <FormBox>
         <MyAutocomplete
           label="Agricultural Resource"
-          name="special"
+          name="agricultural"
           options={agriculturalResources}
           defaultValue="None"
         />

@@ -1,6 +1,7 @@
 import mongoClient from "@/lib/mongodb";
-import { validatePlanet } from "@/lib/validators/planet";
 import { NextResponse } from "next/server";
+
+import { validatePlanetAddition } from "@/lib/validators/planet";
 
 export async function GET(request: Request) {
   const client = await mongoClient;
@@ -16,10 +17,10 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const data = await request.json();
 
-  const [err, planet] = validatePlanet(data);
+  const { error, planet, warning } = validatePlanetAddition(data);
 
-  if (err) {
-    return NextResponse.json({ error: err.msg }, { status: err.status });
+  if (error) {
+    return NextResponse.json({ error: error.msg }, { status: error.status });
   }
 
   if (!planet) {
@@ -27,6 +28,10 @@ export async function POST(request: Request) {
       { error: "Unable to validate planet" },
       { status: 500 },
     );
+  }
+
+  if (warning && warning !== "") {
+    return NextResponse.json({ msg: warning, warn: true });
   }
 
   return NextResponse.json({

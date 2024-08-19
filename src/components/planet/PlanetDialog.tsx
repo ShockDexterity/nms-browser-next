@@ -196,7 +196,8 @@ async function handleEditSubmit(
   refreshPlanets: () => void,
 ) {
   const formData = Object.fromEntries(new FormData(form).entries());
-  const stringifiedData = JSON.stringify({ _id, ...formData });
+  const stringifiedData = JSON.stringify(formData);
+  // const stringifiedData = JSON.stringify({ _id, ...formData });
 
   try {
     const apiResponse = await fetch(`./api/planets/${_id}`, {
@@ -208,20 +209,21 @@ async function handleEditSubmit(
       body: stringifiedData,
     });
 
-    const response: APISuccess | APIFailure = await apiResponse.json();
+    const response = await apiResponse.json();
 
     if (response.error) {
-      // edit failed
-      updateSnackbar("error", response.msg);
+      // add failed
+      updateSnackbar("error", response.error);
       return false; // bad
     }
-    // edit succeeded
+
+    // add succeeded
     if (response.warn) {
-      // edit succeeded but has a warning
-      updateSnackbar("warning", response.msg);
+      // add succeeded but has a warning
+      updateSnackbar("warning", `${response.msg}: ${apiResponse.status}`);
     } else {
-      // edit succeeded without a warning
-      updateSnackbar("success", response.msg);
+      // add succeeded without a warning
+      updateSnackbar("success", `${response.msg}: ${apiResponse.status}`);
     }
     refreshPlanets();
     form.reset();
@@ -230,7 +232,7 @@ async function handleEditSubmit(
     console.error(error);
     updateSnackbar(
       "error",
-      "Unable to edit planet. Check the console for more information",
+      "Unable to add planet. Check the console for more information",
     );
   }
   return false; // bad

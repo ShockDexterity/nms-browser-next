@@ -43,15 +43,13 @@ export default function PlanetCard({ planet }: Props) {
   };
 
   const handleEditClick = (event: React.SyntheticEvent) => {
-    snackbarDispatch({
-      type: "SET_SNACKBAR_SEVERITY",
-      payload: { severity: "warning" },
+    event.preventDefault();
+
+    planetDispatch({ type: "SAVE", payload: { planet: planet } });
+    dialogDispatch({
+      type: "SHOW_EDIT_DIALOG",
+      payload: { _for: "planet", title: `Edit ${planet.name}` },
     });
-    snackbarDispatch({
-      type: "SET_SNACKBAR_MESSAGE",
-      payload: { message: "Edit Not Yet Implemented" },
-    });
-    snackbarDispatch({ type: "SHOW_SNACKBAR", payload: {} });
   };
 
   const handleDeleteClick = (event: React.SyntheticEvent) => {
