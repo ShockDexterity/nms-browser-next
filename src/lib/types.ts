@@ -76,3 +76,13 @@ export type APISuccess = CustomApiResponse & {
   success: true;
   warn: boolean;
 };
+
+export class ValidationError extends Error {
+  constructor(
+    message: string,
+    public status: number,
+  ) {
+    super(message);
+    this.name = "ValidationError";
+  }
+}
