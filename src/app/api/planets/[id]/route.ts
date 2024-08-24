@@ -2,7 +2,8 @@ import mongoClient from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 
-import { validatePlanetEdit } from "@/lib/validators/planet";
+import { validatePlanet } from "@/lib/validators/planet";
+import { ValidationError } from "@/lib/types";
 
 export async function GET(
   request: Request,
@@ -24,24 +25,30 @@ export async function PUT(
   const data = await request.json();
   const _id = new ObjectId(context.params.id);
 
-  const { error, planet, warning } = validatePlanetEdit(data);
+  try {
+    const { planet, warning } = validatePlanet(data, true);
 
-  if (error) {
-    return NextResponse.json({ error: error.msg }, { status: error.status });
+    if (!planet) {
+      throw new ValidationError("Unable to validate planet", 500);
+    }
+
+    if (warning && warning !== "") {
+      return NextResponse.json({ msg: warning, warn: true });
+    }
+
+    return NextResponse.json({
+      msg: `Successfully added planet ${planet.name}}`,
+    });
+  } catch (error: any) {
+    if (error instanceof ValidationError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.status },
+      );
+    } else if (error instanceof Error) {
+      return NextResponse.json({ error: error.message });
+    } else {
+      return NextResponse.json({ error: "Unknown Error" });
+    }
   }
-
-  if (!planet) {
-    return NextResponse.json(
-      { error: "Unable to validate planet" },
-      { status: 500 },
-    );
-  }
-
-  if (warning && warning !== "") {
-    return NextResponse.json({ msg: warning });
-  }
-
-  return NextResponse.json({
-    msg: `Successfully added planet ${planet.name}}`,
-  });
 }

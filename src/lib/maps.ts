@@ -3,7 +3,7 @@ import { exoticBiomes } from "./lists";
 /**
  * An object that maps unique biome descriptors to their more general biome type.
  */
-export const biomeDescriptors = {
+export const biomeDescriptorMap: { [index: string]: string } = {
   "[REDACTED]": "Chromatic",
   Acidic: "Toxic",
   Acrid: "Toxic",
@@ -181,7 +181,7 @@ export const biomeDescriptors = {
  *
  * Anything other biome must have "None" as their agricultural resource
  */
-export const biomeAgriculturalResources = {
+export const biomeAgriculturalResourceMap: { [index: string]: string } = {
   Barren: "Cactus Flesh",
   Frozen: "Frost Crystal",
   Irradiated: "Gamma Root",
@@ -199,7 +199,7 @@ export const biomeAgriculturalResources = {
 /**
  * An object to speed up verifying if resource and infested biome match.
  */
-export const infestedAgriculturalResources = {
+export const infestedAgriculturalResourceMap: { [index: string]: string } = {
   "Cactus Flesh": "Infested Barren",
   "Frost Crystal": "Infested Frozen",
   "Fungal Mold": "Infested Toxic",
@@ -212,7 +212,7 @@ export const infestedAgriculturalResources = {
  *
  * Cobalt, Magnetized Ferrite, Salt, Silver, and Sodium can be found in any biome.
  */
-export const resourceBiomes = {
+export const resourceBiomeMap: { [index: string]: string[] } = {
   Ammonia: ["Toxic", "Chromatic"],
   Basalt: ["Volcanic"],
   Dioxite: ["Frozen", "Chromatic"],
