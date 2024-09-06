@@ -37,7 +37,7 @@ export async function PUT(
     }
 
     return NextResponse.json({
-      msg: `Successfully added planet ${planet.name}}`,
+      msg: `Successfully edited planet ${planet.name}}`,
     });
   } catch (error: any) {
     if (error instanceof ValidationError) {
