@@ -148,7 +148,7 @@ export function validatePlanet(
   } else {
     sBiome = getBiomeNew(sDescriptor, sAgricultural, sLocal);
     if (sBiome.indexOf("/") !== -1) {
-      warning = "Cannot determine if planet is Lush or Marsh.";
+      warning = 'Cannot determine if planet is "Lush" or "Marsh".';
     }
   }
 
@@ -186,7 +186,7 @@ function getBiomeNew(desc: string, agri: string, local: string): string {
         return "Barren";
       } else {
         throw new ValidationError(
-          `Descriptor ${desc} cannot have agricultural resource ${agri}`,
+          `Descriptor "${desc}" cannot have agricultural resource "${agri}"`,
           400,
         );
       }
@@ -197,7 +197,7 @@ function getBiomeNew(desc: string, agri: string, local: string): string {
         return "Infested Scorched";
       } else {
         throw new ValidationError(
-          `Descriptor ${desc} cannot have agricultural resource ${agri}`,
+          `Descriptor "${desc}" cannot have agricultural resource "${agri}"`,
           400,
         );
       }
@@ -207,7 +207,7 @@ function getBiomeNew(desc: string, agri: string, local: string): string {
         return infestedAgriculturalResourceMap[agri];
       } else {
         throw new ValidationError(
-          `Descriptor ${desc} cannot have agricultural resource ${agri}`,
+          `Descriptor "${desc}" cannot have agricultural resource "${agri}"`,
           400,
         );
       }
@@ -223,7 +223,7 @@ function getBiomeNew(desc: string, agri: string, local: string): string {
         }
       } else {
         throw new ValidationError(
-          `Descriptor ${desc} cannot have agricultural resource ${agri}`,
+          `Descriptor "${desc}" cannot have agricultural resource "${agri}"`,
           400,
         );
       }
@@ -248,7 +248,7 @@ function getBiomeEdit(
         } else {
           return {
             biome: "Dead",
-            note: `${biome} was invalid, overwrote to Dead`,
+            note: `"${biome}" was invalid, overwritten to "Dead"`,
           };
         }
       } else if (agri === "Cactus Flesh") {
@@ -257,12 +257,12 @@ function getBiomeEdit(
         } else {
           return {
             biome: "Dead",
-            note: `${biome} was invalid, overwrote to Barren`,
+            note: `"${biome}" was invalid, overwritten to "Barren"`,
           };
         }
       } else {
         throw new ValidationError(
-          `Descriptor ${desc} cannot have agricultural resource ${agri}`,
+          `Descriptor "${desc}" cannot have agricultural resource "${agri}"`,
           400,
         );
       }
@@ -273,7 +273,7 @@ function getBiomeEdit(
         } else {
           return {
             biome: "Glitch",
-            note: `${biome} was invalid, overwrote to Glitch`,
+            note: `"${biome}" was invalid, overwritten to "Glitch"`,
           };
         }
       } else if (agri === "Solanium") {
@@ -282,12 +282,12 @@ function getBiomeEdit(
         } else {
           return {
             biome: "Infested Scorched",
-            note: `${biome} was invalid, overwrote to Infested Scorched`,
+            note: `"${biome}" was invalid, overwritten to "Infested Scorched"`,
           };
         }
       } else {
         throw new ValidationError(
-          `Descriptor ${desc} cannot have agricultural resource ${agri}`,
+          `Descriptor "${desc}" cannot have agricultural resource "${agri}"`,
           400,
         );
       }
@@ -297,7 +297,7 @@ function getBiomeEdit(
         return { biome };
       } else {
         throw new ValidationError(
-          `Descriptor ${desc} cannot have agricultural resource ${agri}`,
+          `Descriptor "${desc}" cannot have agricultural resource "${agri}"`,
           400,
         );
       }
@@ -309,7 +309,7 @@ function getBiomeEdit(
         } else {
           return {
             biome: "Marsh",
-            note: `${biome} was invalid, overwrote to Marsh`,
+            note: `"${biome}" was invalid, overwritten to "Marsh"`,
           };
         }
       } else if (agri === "Star Bulb") {
@@ -319,20 +319,20 @@ function getBiomeEdit(
           } else {
             return {
               biome: "Marsh",
-              note: `${biome} was invalid, overwrote to Marsh`,
+              note: `"${biome}" was invalid, overwritten to "Marsh"`,
             };
           }
         } else if (biome === "Lush" || biome === "Marsh") {
           return { biome };
         } else {
           throw new ValidationError(
-            "A planet with Star Bulb must be a Marsh or Lush Biome",
+            'A planet with "Star Bulb" must be a "Marsh" or "Lush Biome"',
             400,
           );
         }
       } else {
         throw new ValidationError(
-          `Descriptor ${desc} cannot have agricultural resource ${agri}`,
+          `Descriptor "${desc}" cannot have agricultural resource "${agri}"`,
           400,
         );
       }
@@ -343,7 +343,7 @@ function getBiomeEdit(
       } else {
         return {
           biome: biomeDescriptorMap[desc],
-          note: `${biome} was invalid, overwrote to ${biomeDescriptorMap[desc]}`,
+          note: `"${biome}" was invalid, overwritten to "${biomeDescriptorMap[desc]}"`,
         };
       }
   }
@@ -353,35 +353,35 @@ function verifyResources(biome: string, agri: string, local: string) {
   if (biome in biomeAgriculturalResourceMap) {
     if (agri !== biomeAgriculturalResourceMap[biome]) {
       throw new ValidationError(
-        `Biome ${biome} cannot have agricultural resource ${agri}`,
+        `Biome "${biome}" cannot have agricultural resource "${agri}"`,
         400,
       );
     }
   } else if (biome === "Lush / Marsh") {
     if (agri !== "Star Bulb") {
       throw new ValidationError(
-        `Biome ${biome} cannot have agricultural resource ${agri}`,
+        `Biome "${biome}" cannot have agricultural resource "${agri}"`,
         400,
       );
     }
   } else if (biome === "Lush") {
     if (agri !== "Star Bulb") {
       throw new ValidationError(
-        `Biome ${biome} cannot have agricultural resource ${agri}`,
+        `Biome "${biome}" cannot have agricultural resource "${agri}"`,
         400,
       );
     }
   } else if (biome === "Marsh") {
     if (agri !== "Star Bulb" && agri !== "None") {
       throw new ValidationError(
-        `Biome ${biome} cannot have agricultural resource ${agri}`,
+        `Biome "${biome}" cannot have agricultural resource "${agri}"`,
         400,
       );
     }
   } else {
     if (agri !== "None") {
       throw new ValidationError(
-        `Biome ${biome} cannot have agricultural resource ${agri}`,
+        `Biome "${biome}" cannot have agricultural resource "${agri}"`,
         400,
       );
     }
@@ -390,7 +390,7 @@ function verifyResources(biome: string, agri: string, local: string) {
   if (local in resourceBiomeMap) {
     if (!resourceBiomeMap[local].includes(biome)) {
       throw new ValidationError(
-        `${local} cannot be in the ${biome} biome`,
+        `"${local}" cannot be in the "${biome}" biome`,
         400,
       );
     }
