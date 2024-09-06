@@ -145,6 +145,7 @@ async function handleAddSubmit(
   refreshPlanets: () => void,
 ) {
   const formData = Object.fromEntries(new FormData(form).entries());
+  // console.log(formData);
   const stringifiedData = JSON.stringify(formData);
 
   try {
@@ -196,8 +197,8 @@ async function handleEditSubmit(
   refreshPlanets: () => void,
 ) {
   const formData = Object.fromEntries(new FormData(form).entries());
+  // console.log(formData);
   const stringifiedData = JSON.stringify(formData);
-  // const stringifiedData = JSON.stringify({ _id, ...formData });
 
   try {
     const apiResponse = await fetch(`./api/planets/${_id}`, {
