@@ -25,6 +25,10 @@ export async function POST(request: Request) {
       throw new ValidationError("Unable to validate planet", 500);
     }
 
+    const client = await mongoClient;
+    const collection = client.db("NMSP").collection("planets");
+    await collection.insertOne(planet);
+
     if (warning && warning !== "") {
       return NextResponse.json({ msg: warning, warn: true });
     }
