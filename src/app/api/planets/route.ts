@@ -19,22 +19,22 @@ export async function POST(request: Request) {
   const data = await request.json();
 
   try {
-    const { planet, warning } = validatePlanet(data);
+    const { validPlanet, warning } = validatePlanet(data);
 
-    if (!planet) {
+    if (!validPlanet) {
       throw new ValidationError("Unable to validate planet", 500);
     }
 
     const client = await mongoClient;
     const collection = client.db("NMSP").collection("planets");
-    await collection.insertOne(planet);
+    await collection.insertOne(validPlanet);
 
     if (warning && warning !== "") {
       return NextResponse.json({ msg: warning, warn: true });
     }
 
     return NextResponse.json({
-      msg: `Successfully added planet ${planet.name}}`,
+      msg: `Successfully added planet ${validPlanet.name}`,
     });
   } catch (error: any) {
     if (error instanceof ValidationError) {

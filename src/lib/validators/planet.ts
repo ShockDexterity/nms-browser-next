@@ -35,7 +35,7 @@ export function validatePlanet(
   submission: Submission,
   edit: boolean = false,
 ): {
-  planet?: PlanetNoId;
+  validPlanet?: PlanetNoId;
   warning?: string;
 } {
   if (Object.keys(submission).length === 0) {
@@ -168,11 +168,11 @@ export function validatePlanet(
   };
 
   if (warning && warning !== "") {
-    return { warning, planet: returnPlanet };
+    return { warning, validPlanet: returnPlanet };
   }
 
   return {
-    planet: returnPlanet,
+    validPlanet: returnPlanet,
   };
 }
 

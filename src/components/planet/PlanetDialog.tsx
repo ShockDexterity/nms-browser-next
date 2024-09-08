@@ -169,10 +169,10 @@ async function handleAddSubmit(
     // add succeeded
     if (response.warn) {
       // add succeeded but has a warning
-      updateSnackbar("warning", `${response.msg}: ${apiResponse.status}`);
+      updateSnackbar("warning", `${response.msg}`);
     } else {
       // add succeeded without a warning
-      updateSnackbar("success", `${response.msg}: ${apiResponse.status}`);
+      updateSnackbar("success", `${response.msg}`);
     }
     refreshPlanets();
     form.reset();
@@ -221,10 +221,10 @@ async function handleEditSubmit(
     // add succeeded
     if (response.warn) {
       // add succeeded but has a warning
-      updateSnackbar("warning", `${response.msg}: ${apiResponse.status}`);
+      updateSnackbar("warning", `${response.msg}`);
     } else {
       // add succeeded without a warning
-      updateSnackbar("success", `${response.msg}: ${apiResponse.status}`);
+      updateSnackbar("success", `${response.msg}`);
     }
     refreshPlanets();
     form.reset();

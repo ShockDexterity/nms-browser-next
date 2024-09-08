@@ -35,7 +35,7 @@ export default function PlanetCard({ planet }: Props) {
   const handleDetailsClick = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    planetDispatch({ type: "SAVE", payload: { planet: planet } });
+    planetDispatch({ type: "SAVE", payload: { planet } });
     dialogDispatch({
       type: "SHOW_DETAILS_DIALOG",
       payload: { _for: "planet", title: planet.name },
@@ -45,23 +45,48 @@ export default function PlanetCard({ planet }: Props) {
   const handleEditClick = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    planetDispatch({ type: "SAVE", payload: { planet: planet } });
+    planetDispatch({ type: "SAVE", payload: { planet } });
     dialogDispatch({
       type: "SHOW_EDIT_DIALOG",
       payload: { _for: "planet", title: `Edit ${planet.name}` },
     });
   };
 
-  const handleDeleteClick = (event: React.SyntheticEvent) => {
-    snackbarDispatch({
-      type: "SET_SNACKBAR_SEVERITY",
-      payload: { severity: "warning" },
-    });
-    snackbarDispatch({
-      type: "SET_SNACKBAR_MESSAGE",
-      payload: { message: "Delete Not Yet Implemented" },
-    });
-    snackbarDispatch({ type: "SHOW_SNACKBAR", payload: {} });
+  const handleDeleteClick = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+
+    if (window.confirm(`Are you sure you want to delete "${planet.name}"?`)) {
+      const apiResponse = await fetch(`./api/planets/${planet._id}`, {
+        method: "DELETE",
+      });
+      const response = await apiResponse.json();
+
+      if (response.error) {
+        snackbarDispatch({ type: "HIDE_SNACKBAR", payload: {} });
+        snackbarDispatch({
+          type: "SET_SNACKBAR_SEVERITY",
+          payload: { severity: "error" },
+        });
+        snackbarDispatch({
+          type: "SET_SNACKBAR_MESSAGE",
+          payload: { message: `Failed to delete "${planet.name}"` },
+        });
+        snackbarDispatch({ type: "SHOW_SNACKBAR", payload: {} });
+      } else {
+        planetDispatch({ type: "REFRESH", payload: {} });
+
+        snackbarDispatch({ type: "HIDE_SNACKBAR", payload: {} });
+        snackbarDispatch({
+          type: "SET_SNACKBAR_SEVERITY",
+          payload: { severity: "success" },
+        });
+        snackbarDispatch({
+          type: "SET_SNACKBAR_MESSAGE",
+          payload: { message: `Successfully deleted "${planet.name}"` },
+        });
+        snackbarDispatch({ type: "SHOW_SNACKBAR", payload: {} });
+      }
+    }
   };
 
   return (
