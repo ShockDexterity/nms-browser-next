@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 
 import { validatePlanet } from "@/lib/validators/planet";
 import { Planet, PlanetNoId, ValidationError } from "@/lib/types";
-import { error } from "console";
 
 export async function GET(
   request: Request,
