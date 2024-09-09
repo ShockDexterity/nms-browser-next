@@ -225,3 +225,74 @@ export const resourceBiomeMap: { [index: string]: string[] } = {
   "Rusted Metal": ["Dead"],
   Uranium: ["Irradiated"],
 };
+
+/**
+ * An object that maps system economic type descriptors
+ *    to the type of the economy they represent
+ */
+export const econTypeMap: { [index: string]: string } = {
+  Alchemical: "Advanced Materials",
+  "Black Market": "Outlaw",
+  Commercial: "Trading",
+  Construction: "Manufacturing",
+  "Energy Supply": "Power Generation",
+  Engineering: "Technology",
+  Experimental: "Scientific",
+  "Fuel Generation": "Power Generation",
+  "High Tech": "Technology",
+  "High Voltage": "Power Generation",
+  Industrial: "Manufacturing",
+  Manufacturing: "Manufacturing",
+  "Mass Production": "Manufacturing",
+  "Material Fusion": "Advanced Materials",
+  Mathematical: "Scientific",
+  Mercantile: "Trading",
+  "Metal Processing": "Advanced Materials",
+  Minerals: "Mining",
+  Mining: "Mining",
+  "Nano-construction": "Technology",
+  None: "Uncharted",
+  "Ore Extraction": "Mining",
+  "Ore Processing": "Advanced Materials",
+  "Power Generation": "Power Generation",
+  Prospecting: "Mining",
+  Research: "Scientific",
+  Scientific: "Scientific",
+  Shipping: "Trading",
+  Technology: "Technology",
+  Trading: "Trading",
+};
+
+/**
+ * An object that maps system economic state descriptors
+ *    to the strength of the economy
+ *
+ * econStrengthMap["Booming"] = "Strong"
+ */
+export const econStrengthMap: { [index: string]: string } = {
+  Adequate: "Average",
+  Advanced: "Strong",
+  Affluent: "Strong",
+  Balanced: "Average",
+  Booming: "Strong",
+  Comfortable: "Average",
+  Declining: "Weak",
+  Destitute: "Weak",
+  Developing: "Average",
+  Failing: "Weak",
+  Fledgling: "Weak",
+  Flourishing: "Strong",
+  "High Supply": "Strong",
+  "Low Supply": "Weak",
+  "Medium Supply": "Average",
+  None: "None",
+  Opulent: "Strong",
+  Promising: "Average",
+  Prosperous: "Strong",
+  Satisfactory: "Average",
+  Struggling: "Weak",
+  Sustainable: "Average",
+  Unpromising: "Weak",
+  Unsuccessful: "Weak",
+  Wealthy: "Strong",
+};

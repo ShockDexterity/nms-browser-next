@@ -69,6 +69,23 @@ export type System = {
   blackhole: boolean;
 };
 
+export type SystemNoId = {
+  name: string;
+  faction: string;
+  abandoned: boolean;
+  economy: {
+    descriptor: string;
+    type: string;
+    state: string;
+    strength: string;
+  };
+  conflict: string;
+  exosuit: boolean;
+  v3: boolean;
+  atlas: boolean;
+  blackhole: boolean;
+};
+
 export type PlanetFilters = {
   biomeOrSpecial: string;
   stellar: string;

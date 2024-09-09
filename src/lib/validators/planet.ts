@@ -61,10 +61,12 @@ export function validatePlanet(
   }
   const sDescriptor = submission.descriptor;
 
-  const goodMoonStrings = ["yes", "on", "true", true];
-  const badMoonStrings = ["no", "off", "false", false];
+  const goodMoonOptions = ["yes", "on", "true", true];
+  const badMoonOptions = ["no", "off", "false", false];
   if (submission.moon && typeof submission.moon === "string") {
-    const moonOptions = [...goodMoonStrings, ...badMoonStrings];
+    const moonOptions = [...goodMoonOptions, ...badMoonOptions].filter(
+      (value) => typeof value === "string",
+    );
     if (!moonOptions.includes(submission.moon)) {
       throw new ValidationError(
         `A "moon" string must be: ${moonOptions.join(" ")}`,
@@ -74,7 +76,7 @@ export function validatePlanet(
   }
   const sMoon =
     submission.moon !== undefined
-      ? goodMoonStrings.includes(submission.moon)
+      ? goodMoonOptions.includes(submission.moon)
       : false;
 
   if (!submission.agricultural) {

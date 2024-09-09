@@ -1,3 +1,4 @@
+// A list of (unique) possible biome descriptors
 export const biomeDescriptors = [
   "[REDACTED]",
   "Abandoned",
@@ -175,6 +176,7 @@ export const biomeDescriptors = [
   "Xeno-Colony",
 ];
 
+// planet descriptors that are shared between multiple biomes
 export const sharedDescriptors = [
   "Abandoned",
   "Desolate",
@@ -183,6 +185,7 @@ export const sharedDescriptors = [
   "Tropical",
 ];
 
+// biome descriptors that are displayed differently in-game
 export const specialDescriptors = [
   "Terraforming Catastrophe",
   "Imminent Core Detonation",
@@ -208,6 +211,7 @@ export const specialDescriptors = [
   "Frozen Anomaly",
 ];
 
+// A list of every in-game biome
 export const biomes = [
   "Barren",
   "Beams",
@@ -239,6 +243,7 @@ export const biomes = [
   "Wire Cell",
 ];
 
+// A list biomes under the "exotic" category
 export const exoticBiomes = [
   "Beams",
   "Bone Spire",
@@ -255,6 +260,7 @@ export const exoticBiomes = [
   "Wire Cell",
 ];
 
+// A list of every agricultural resource
 export const agriculturalResources = [
   "None",
   "Cactus Flesh",
@@ -265,6 +271,7 @@ export const agriculturalResources = [
   "Star Bulb",
 ];
 
+// A list of every stellar metal
 export const stellarMetals = [
   "Copper",
   "Activated Copper",
@@ -276,6 +283,7 @@ export const stellarMetals = [
   "Activated Indium",
 ];
 
+// A list of every local resource
 export const localResources = [
   "Ammonia",
   "Basalt",
@@ -290,6 +298,7 @@ export const localResources = [
   "Uranium",
 ];
 
+// A list of every general resource
 export const generalResources = [
   "Cobalt",
   "Magnetized Ferrite",
@@ -297,3 +306,88 @@ export const generalResources = [
   "Silver",
   "Sodium",
 ];
+
+// A list of in-game factions
+export const factions = ["Gek", "Korvax", "Vy'keen", "None"];
+
+// A list of system conflict levels
+export const conflictLevels = ["Low", "Medium", "High", "Outlaw"];
+
+// A list of economic type descriptors
+export const econDescriptors = [
+  "Alchemical",
+  "Black Market",
+  "Commercial",
+  "Construction",
+  "Energy Supply",
+  "Engineering",
+  "Experimental",
+  "Fuel Generation",
+  "High Tech",
+  "High Voltage",
+  "Industrial",
+  "Manufacturing",
+  "Mass Production",
+  "Material Fusion",
+  "Mathematical",
+  "Mercantile",
+  "Metal Processing",
+  "Minerals",
+  "Mining",
+  "Nano-construction",
+  "None",
+  "Ore Extraction",
+  "Ore Processing",
+  "Power Generation",
+  "Prospecting",
+  "Research",
+  "Scientific",
+  "Shipping",
+  "Technology",
+  "Trading",
+];
+
+// A list of economic types
+export const econTypes = [
+  "Advanced Materials",
+  "Manufacturing",
+  "Mining",
+  "Outlaw",
+  "Power Generation",
+  "Scientific",
+  "Technology",
+  "Trading",
+  "Uncharted",
+];
+
+// A list of economic strength descriptors
+export const econStates = [
+  "Adequate",
+  "Advanced",
+  "Affluent",
+  "Balanced",
+  "Booming",
+  "Comfortable",
+  "Declining",
+  "Destitute",
+  "Developing",
+  "Failing",
+  "Fledgling",
+  "Flourishing",
+  "High Supply",
+  "Low Supply",
+  "Medium Supply",
+  "None",
+  "Opulent",
+  "Promising",
+  "Prosperous",
+  "Satisfactory",
+  "Struggling",
+  "Sustainable",
+  "Unpromising",
+  "Unsuccessful",
+  "Wealthy",
+];
+
+// A list of economic strengths
+export const econStrengths = ["None", "Weak", "Average", "Strong"];
