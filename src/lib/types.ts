@@ -87,21 +87,6 @@ export type SystemFilters = {
   blackhole: boolean;
 };
 
-type CustomApiResponse = {
-  msg: string;
-};
-
-export type APIFailure = CustomApiResponse & {
-  error: true;
-  success?: never;
-};
-
-export type APISuccess = CustomApiResponse & {
-  error?: never;
-  success: true;
-  warn: boolean;
-};
-
 export class ValidationError extends Error {
   constructor(
     message: string,

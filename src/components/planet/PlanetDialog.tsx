@@ -18,8 +18,6 @@ import {
 } from "@/lib/customHooks";
 import { getBiomeBorder } from "@/lib/customFunctions";
 
-import { APIFailure, APISuccess } from "@/lib/types";
-
 type Props = Readonly<{
   children: React.ReactNode;
 }>;
