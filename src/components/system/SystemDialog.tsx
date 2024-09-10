@@ -12,20 +12,20 @@ import {
 import {
   useDialogDispatch,
   useDialogReducer,
-  usePlanetDispatch,
-  usePlanetReducer,
   useSnackbarDispatch,
+  useSystemDispatch,
+  useSystemReducer,
 } from "@/lib/customHooks";
-import { getBiomeBorder } from "@/lib/customFunctions";
+import { getSystemBorder } from "@/lib/customFunctions";
 
 type Props = Readonly<{ children: React.ReactNode }>;
 
-export default function PlanetDialog({ children }: Props) {
+export default function SystemDialog({ children }: Props) {
   const { show, display, title } = useDialogReducer();
   const dialogDispatch = useDialogDispatch();
 
-  const { planet } = usePlanetReducer();
-  const planetDispatch = usePlanetDispatch();
+  const { system } = useSystemReducer();
+  const systemDispatch = useSystemDispatch();
 
   const snackbarDispatch = useSnackbarDispatch();
 
@@ -48,42 +48,48 @@ export default function PlanetDialog({ children }: Props) {
     snackbarDispatch({ type: "SHOW_SNACKBAR", payload: {} });
   };
 
-  const refreshPlanets = () => {
-    planetDispatch({ type: "REFRESH", payload: {} });
+  const refreshSystems = () => {
+    systemDispatch({ type: "REFRESH", payload: {} });
+  };
+
+  const handleClose = () => {
+    dialogDispatch({ type: "CLOSE_DIALOG", payload: { _for: "" } });
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const form = event.currentTarget;
-
     if (!form && display !== "DETAILS") {
       throw new Error("Cannot find form to submit");
     }
+    const sys_id = system._id;
 
-    if (display === "ADD_FORM") {
-      if (await handleAddSubmit(form, updateSnackbar, refreshPlanets)) {
-        handleClose();
-      }
-    } else if (display === "EDIT_FORM") {
-      if (
-        await handleEditSubmit(form, planet._id, updateSnackbar, refreshPlanets)
-      ) {
-        handleClose();
-      }
-    } else if (display === "DETAILS") {
-      // nothing should happen, but you shouldn't be here anyway
-      // don't want/need to throw an error
-    } else {
-      // you REALLY shouldn't be here
-      throw new Error(
-        "You tried to submit from something that shouldn't be submitting",
-      );
+    switch (display) {
+      case "ADD_FORM":
+        handleAddSubmit(form, updateSnackbar, refreshSystems, handleClose);
+        break;
+
+      case "EDIT_FORM":
+        handleEditSubmit(
+          form,
+          sys_id,
+          updateSnackbar,
+          refreshSystems,
+          handleClose,
+        );
+        break;
+
+      case "DETAILS":
+        // nothing should happen, but you shouldn't be here anyway
+        // don't want/need to throw an error
+        break;
+
+      default:
+        throw new Error(
+          "You tried to submit from something that shouldn't be submitting",
+        );
     }
-  };
-
-  const handleClose = () => {
-    dialogDispatch({ type: "CLOSE_DIALOG", payload: { _for: "" } });
   };
 
   if (display === "DETAILS") {
@@ -94,12 +100,7 @@ export default function PlanetDialog({ children }: Props) {
         fullWidth={true}
         maxWidth="sm"
         PaperProps={{
-          sx: getBiomeBorder(
-            planet.extreme,
-            planet.infested,
-            planet.exotic,
-            false,
-          ),
+          sx: getSystemBorder(system.atlas, system.blackhole, false),
         }}
       >
         <DialogTitle>{title}</DialogTitle>
@@ -138,14 +139,14 @@ async function handleAddSubmit(
     severity: "success" | "warning" | "error",
     message: string,
   ) => void,
-  refreshPlanets: () => void,
+  refreshSystems: () => void,
+  handleClose: () => void,
 ) {
   const formData = Object.fromEntries(new FormData(form).entries());
-  // console.log(formData);
   const stringifiedData = JSON.stringify(formData);
 
   try {
-    const apiResponse = await fetch("./api/planets", {
+    const apiResponse = await fetch("./api/systems", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -156,10 +157,10 @@ async function handleAddSubmit(
 
     const response = await apiResponse.json();
 
+    // add failed
     if (response.error) {
-      // add failed
       updateSnackbar("error", response.error);
-      return false; // bad
+      return; // don't want to go further
     }
 
     // add succeeded
@@ -170,17 +171,20 @@ async function handleAddSubmit(
       // add succeeded without a warning
       updateSnackbar("success", `${response.msg}`);
     }
-    refreshPlanets();
+
+    // refresh systems
+    refreshSystems();
+    // reset the form
     form.reset();
-    return true; // good
+    // close the dialog
+    handleClose();
   } catch (error: unknown) {
     console.error(error);
     updateSnackbar(
       "error",
-      "Unable to add planet. Check the console for more information",
+      "Unable to add system. Check the console for more information",
     );
   }
-  return false; // bad
 }
 
 async function handleEditSubmit(
@@ -190,14 +194,14 @@ async function handleEditSubmit(
     severity: "success" | "warning" | "error",
     message: string,
   ) => void,
-  refreshPlanets: () => void,
+  refreshSystems: () => void,
+  handleClose: () => void,
 ) {
   const formData = Object.fromEntries(new FormData(form).entries());
-  // console.log(formData);
   const stringifiedData = JSON.stringify(formData);
 
   try {
-    const apiResponse = await fetch(`./api/planets/${_id}`, {
+    const apiResponse = await fetch(`./api/systems/${_id}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -211,7 +215,7 @@ async function handleEditSubmit(
     // edit failed
     if (response.error) {
       updateSnackbar("error", response.error);
-      return false; // bad
+      return; // don't want to go further
     }
 
     // edit succeeded
@@ -222,15 +226,18 @@ async function handleEditSubmit(
       // edit succeeded without a warning
       updateSnackbar("success", `${response.msg}`);
     }
-    refreshPlanets();
+
+    // refresh systems
+    refreshSystems();
+    // reset the form
     form.reset();
-    return true; // good
+    // close the dialog
+    handleClose();
   } catch (error: unknown) {
     console.error(error);
     updateSnackbar(
       "error",
-      "Unable to edit planet. Check the console for more information",
+      "Unable to edit system. Check the console for more information",
     );
   }
-  return false; // bad
 }
