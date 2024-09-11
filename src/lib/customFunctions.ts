@@ -66,7 +66,7 @@ export function getSystemBorder(
     return {
       border,
       borderImageSlice: 1,
-      borderImageSource: "linear-gradient(to right, #f44336 50%, #ce93d8 50%)",
+      borderImageSource: "linear-gradient(45deg, #f44336 50%, #ce93d8 50%)",
       borderRadius,
     } as const;
   } else if (hasAtlas) {
