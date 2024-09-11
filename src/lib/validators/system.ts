@@ -73,29 +73,7 @@ export function validateSystem(
   }
   const sEconDescriptor = submission.econDescriptor;
 
-  let sEconType = "";
-  if (edit) {
-    if (!submission.econType) {
-      throw new ValidationError(
-        "Must provide system economy type when editing",
-        400,
-      );
-    } else if (!econTypes.includes(submission.econType)) {
-      throw new ValidationError("Invalid system economy type", 400);
-    }
-
-    const { econType, note } = getEconTypeEdit(
-      sEconDescriptor,
-      submission.econType,
-    );
-
-    sEconType = econType;
-    if (note) {
-      warning += " " + note;
-    }
-  } else {
-    sEconType = econTypeMap[submission.econDescriptor];
-  }
+  const sEconType = econTypeMap[submission.econDescriptor];
 
   if (!submission.econState) {
     throw new ValidationError("No economy state provided", 400);
@@ -104,29 +82,7 @@ export function validateSystem(
   }
   const sEconState = submission.econState;
 
-  let sEconStrength = "";
-  if (edit) {
-    if (!submission.econStrength) {
-      throw new ValidationError(
-        "Must provide system economy strength when editing",
-        400,
-      );
-    } else if (!econStrengths.includes(submission.econStrength)) {
-      throw new ValidationError("Invalid economy strength", 400);
-    }
-
-    const { econStrength, note } = getEconStrengthEdit(
-      sEconState,
-      submission.econStrength,
-    );
-
-    sEconType = econStrength;
-    if (note) {
-      warning += " " + note;
-    }
-  } else {
-    sEconStrength = econStrengthMap[sEconState];
-  }
+  const sEconStrength = econStrengthMap[sEconState];
 
   if (!submission.conflict) {
     throw new ValidationError("Must provide system conflict level", 400);

@@ -77,21 +77,6 @@ export default function SystemEditForm() {
         />
       </FormBox>
 
-      <FormBox>
-        <MyAutocomplete
-          label="Economy Type"
-          name="econType"
-          options={econTypes}
-          defaultValue={system?.economy?.type ?? ""}
-        />
-        <MyAutocomplete
-          label="Economy Strength"
-          name="econStrength"
-          options={econStrengths}
-          defaultValue={system?.economy?.strength ?? ""}
-        />
-      </FormBox>
-
       <Divider sx={{ my: 0.5 }} />
 
       <FormBox>
