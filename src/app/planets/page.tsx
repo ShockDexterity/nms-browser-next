@@ -15,14 +15,14 @@ import PlanetDetails from "@/components/planet/PlanetDetails";
 import PlanetDialog from "@/components/planet/PlanetDialog";
 import PlanetEditForm from "@/components/planet/PlanetEditForm";
 
+import { Planet } from "@/lib/types";
+
 import {
   DEFAULT_PLN_REDUCER,
   PlanetDispatchContext,
   planetReducerFunction,
   PlanetReducerContext,
 } from "@/lib/state/planetReducer";
-
-import { Planet } from "@/lib/types";
 
 import {
   DEFAULT_DLG_REDUCER,
@@ -71,16 +71,14 @@ export default function PlanetPage() {
           <DialogDispatchContext.Provider value={dialogDispatch}>
             <Grid container spacing={2}>
               {planets.map((planet) => {
-                return (
-                  <PlanetCard key={planet._id} planet={planet}></PlanetCard>
-                );
+                return <PlanetCard key={planet._id} planet={planet} />;
               })}
             </Grid>
 
             <Divider sx={{ py: 2, mb: 2 }} />
 
             <Button
-              onClick={() => planetDispatch({ type: "REFRESHED", payload: {} })}
+              onClick={() => planetDispatch({ type: "REFRESH", payload: {} })}
             >
               Refresh
             </Button>
