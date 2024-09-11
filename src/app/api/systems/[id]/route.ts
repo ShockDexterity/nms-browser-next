@@ -2,8 +2,8 @@ import mongoClient from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 
-import { validatePlanet } from "@/lib/validators/planet";
-import { Planet, PlanetNoId, ValidationError } from "@/lib/types";
+import { validateSystem } from "@/lib/validators/system";
+import { System, SystemNoId, ValidationError } from "@/lib/types";
 
 export async function GET(
   request: Request,
@@ -12,16 +12,16 @@ export async function GET(
   const _id = new ObjectId(context.params.id);
 
   const client = await mongoClient;
-  const collection = client.db("NMSP").collection("planets");
-  const planet = await collection.findOne({ _id });
+  const collection = client.db("NMSP").collection("systems");
+  const system = await collection.findOne({ _id });
 
-  if (!planet) {
+  if (!system) {
     return NextResponse.json({
-      error: `Unable to find planet by _id ${_id.toString()}`,
+      error: `Unable to find system by _id ${_id.toString()}`,
     });
   }
 
-  return NextResponse.json(planet);
+  return NextResponse.json(system);
 }
 
 export async function PUT(
@@ -31,16 +31,16 @@ export async function PUT(
   const _id = new ObjectId(context.params.id);
 
   const client = await mongoClient;
-  const collection = client.db("NMSP").collection("planets");
+  const collection = client.db("NMSP").collection("systems");
 
-  const planetToEdit: Planet = JSON.parse(
+  const systemToEdit: System = JSON.parse(
     JSON.stringify(await collection.findOne({ _id })),
   );
 
-  if (!planetToEdit) {
+  if (!systemToEdit) {
     return NextResponse.json(
       {
-        error: "Trying to edit a planet that does not exist",
+        error: "Trying to edit a system that does not exist",
       },
       { status: 400 },
     );
@@ -48,26 +48,26 @@ export async function PUT(
 
   try {
     const data = await request.json();
-    const { validPlanet, warning } = validatePlanet(data, true);
+    const { validSystem, warning } = validateSystem(data, true);
 
-    if (!validPlanet) {
+    if (!validSystem) {
       throw new ValidationError("Unable to validate planet", 500);
     }
 
-    Object.keys(validPlanet).forEach((key: string) => {
-      if (!(key in planetToEdit)) {
-        delete validPlanet[key as keyof PlanetNoId];
+    Object.keys(validSystem).forEach((key: string) => {
+      if (!(key in systemToEdit)) {
+        delete validSystem[key as keyof SystemNoId];
       }
     });
 
-    const result = await collection.updateOne({ _id }, { $set: validPlanet });
+    const result = await collection.updateOne({ _id }, { $set: validSystem });
 
     if (result.matchedCount < 1) {
-      throw new ValidationError("Unable to find planet to edit", 500);
+      throw new ValidationError("Unable to find system to edit", 500);
     }
 
     if (result.modifiedCount < 1) {
-      return NextResponse.json({ msg: "Planet unchanged", warn: true });
+      return NextResponse.json({ msg: "System unchanged", warn: true });
     }
 
     if (warning && warning !== "") {
@@ -75,7 +75,7 @@ export async function PUT(
     }
 
     return NextResponse.json({
-      msg: `Successfully edited planet ${validPlanet.name}`,
+      msg: `Successfully edited planet ${validSystem.name}`,
     });
   } catch (error: unknown) {
     if (error instanceof ValidationError) {
@@ -98,22 +98,22 @@ export async function DELETE(
   const _id = new ObjectId(context.params.id);
 
   const client = await mongoClient;
-  const collection = client.db("NMSP").collection("planets");
-  const planet = await collection.findOneAndDelete(
+  const collection = client.db("NMSP").collection("systems");
+  const system = await collection.findOneAndDelete(
     { _id },
     {
       projection: { name: 1 },
     },
   );
 
-  if (!planet) {
+  if (!system) {
     return NextResponse.json(
-      { error: "Unable to delete planet" },
+      { error: "Unable to delete system" },
       { status: 500 },
     );
   }
 
   return NextResponse.json({
-    msg: `Successfully deleted planet ${planet.name}`,
+    msg: `Successfully deleted system ${system.name}`,
   });
 }

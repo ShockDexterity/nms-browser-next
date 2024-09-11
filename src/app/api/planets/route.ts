@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       msg: `Successfully added planet ${validPlanet.name}`,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof ValidationError) {
       return NextResponse.json(
         { error: error.message },
