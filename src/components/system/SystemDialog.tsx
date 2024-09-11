@@ -63,7 +63,6 @@ export default function SystemDialog({ children }: Props) {
     if (!form && display !== "DETAILS") {
       throw new Error("Cannot find form to submit");
     }
-    const sys_id = system._id;
 
     switch (display) {
       case "ADD_FORM":
@@ -73,7 +72,7 @@ export default function SystemDialog({ children }: Props) {
       case "EDIT_FORM":
         handleEditSubmit(
           form,
-          sys_id,
+          system._id,
           updateSnackbar,
           refreshSystems,
           handleClose,
