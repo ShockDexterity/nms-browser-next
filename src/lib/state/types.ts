@@ -47,17 +47,6 @@ export type SystemReducerAction = {
   };
 };
 
-export type SystemListReducer = {
-  systemList: string[];
-};
-
-export type SystemListReducerAction = {
-  type: "SET_LIST";
-  payload: {
-    systemList?: string[];
-  };
-};
-
 export type SnackbarReducer = {
   show: boolean;
   severity: "success" | "warning" | "error";
