@@ -87,10 +87,10 @@ export type SystemNoId = {
 };
 
 export type PlanetFilters = {
-  biomeOrSpecial: string;
+  biomeOrAgriculture: string;
   stellar: string;
-  otherResource1: string;
-  otherResource2: string;
+  local: string;
+  general: string;
 };
 
 export type SystemFilters = {
