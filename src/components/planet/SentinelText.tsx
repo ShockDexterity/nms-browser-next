@@ -22,22 +22,30 @@ export default function SentinelText({ level, display }: Props) {
   );
 }
 
-const getLevelText = (level: SentinelLevel) => {
+function getLevelText(level: SentinelLevel) {
   switch (level) {
     case SentinelLevel.Low:
-      return "Low";
+      return <>Low</>;
     case SentinelLevel.High:
-      return "High";
+      return <>High</>;
     case SentinelLevel.Aggressive:
-      return <b>{"AGGRESSIVE"}</b>;
+      return <b>AGGRESSIVE</b>;
     case SentinelLevel.Corrupt:
-      return "CORRUPT";
+      return <>CORRUPT</>;
   }
+}
+
+type Border = {
+  border: number;
+  borderColor: string;
+  borderRadius: string;
+  bgcolor: string;
+  color: string;
 };
 
-const getStyle = (level: SentinelLevel) => {
+function getStyle(level: SentinelLevel): Border | {} {
   const border = 2;
-  const borderRadius = border + "px";
+  const borderRadius = `${border}px`;
 
   switch (level) {
     case SentinelLevel.Low:
@@ -73,4 +81,4 @@ const getStyle = (level: SentinelLevel) => {
     default:
       return {};
   }
-};
+}
