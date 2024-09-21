@@ -86,7 +86,7 @@ export type SystemNoId = {
   blackhole: boolean;
 };
 
-export type PlanetFilters = {
+export type PlanetFilter = {
   biomeOrAgriculture: string;
   stellar: string;
   local: string;

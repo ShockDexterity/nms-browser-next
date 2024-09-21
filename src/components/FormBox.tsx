@@ -12,7 +12,7 @@ export default function FormBox({ children }: Props) {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      sx={{ "& .MuiTextField-root": { m: 1, width: "26ch" } }}
+      sx={{ "& .MuiTextField-root": { m: 1, width: "26ch" }, flexWrap: "wrap" }}
     >
       {children}
     </Box>

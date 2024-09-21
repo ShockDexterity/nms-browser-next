@@ -1,4 +1,4 @@
-import { Planet, PlanetFilters, System, SystemFilters } from "../types";
+import { Planet, PlanetFilter, System, SystemFilters } from "../types";
 
 export type DialogReducer = {
   show: boolean;

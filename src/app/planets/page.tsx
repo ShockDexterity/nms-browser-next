@@ -3,6 +3,7 @@ import React from "react";
 
 import {
   Button,
+  Collapse,
   Divider,
   Fab as FloatingActionButton,
   Grid,
@@ -15,7 +16,7 @@ import PlanetDetails from "@/components/planet/PlanetDetails";
 import PlanetDialog from "@/components/planet/PlanetDialog";
 import PlanetEditForm from "@/components/planet/PlanetEditForm";
 
-import { Planet, PlanetFilters } from "@/lib/types";
+import { Planet, PlanetFilter } from "@/lib/types";
 
 import {
   DEFAULT_PLN_REDUCER,
@@ -30,6 +31,8 @@ import {
   DialogReducerContext,
   dialogReducerFunction,
 } from "@/lib/state/dialogReducer";
+
+import PlanetFilters from "@/components/planet/PlanetFilters";
 
 const fabSX = { position: "absolute", bottom: 16, right: 16 };
 
@@ -74,16 +77,40 @@ export default function PlanetPage() {
     });
   };
 
+  const [showFilters, setShowFilters] = React.useState<boolean>(false);
+
   return (
     <PlanetReducerContext.Provider value={planetReducer}>
       <PlanetDispatchContext.Provider value={planetDispatch}>
         <DialogReducerContext.Provider value={dialogReducer}>
           <DialogDispatchContext.Provider value={dialogDispatch}>
+            <Button
+              variant="contained"
+              onClick={() => setShowFilters(!showFilters)}
+            >
+              Filters
+            </Button>
+            <Divider sx={{ pb: 2, mb: 2 }} />
+
+            <Collapse in={showFilters}>
+              <PlanetFilters
+                boa={boa}
+                setBoa={setBoa}
+                stellar={stellar}
+                setStellar={setStellar}
+                local={local}
+                setLocal={setLocal}
+                general={general}
+                setGeneral={setGeneral}
+              />
+              <Divider sx={{ pb: 2, mb: 2 }} />
+            </Collapse>
+
             <Grid container spacing={2}>
               {planets
                 .filter((value) =>
                   planetFilterCheck(value, {
-                    biomeOrAgriculture: "",
+                    biomeOrAgriculture: boa,
                     stellar: "",
                     local: "",
                     general: "",
@@ -135,6 +162,13 @@ async function fetchPlanets(
   }
 }
 
-function planetFilterCheck(planet: Planet, filter: PlanetFilters) {
-  return true;
+function planetFilterCheck(planet: Planet, filter: PlanetFilter) {
+  if (filter.biomeOrAgriculture === "") {
+    return true;
+  }
+  return (
+    filter.biomeOrAgriculture !== "" &&
+    (planet.biome === filter.biomeOrAgriculture ||
+      planet.resources.agricultural === filter.biomeOrAgriculture)
+  );
 }
