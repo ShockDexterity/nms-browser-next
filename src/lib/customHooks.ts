@@ -20,12 +20,7 @@ import {
   SystemReducerContext,
 } from "./state/systemReducer";
 
-import {
-  SystemListDispatchContext,
-  SystemListReducerContext,
-} from "./state/systemListReducer";
-
-export const useDialogReducer = () => {
+export function useDialogReducer() {
   const reducer = useContext(DialogReducerContext);
 
   if (!reducer) {
@@ -35,9 +30,9 @@ export const useDialogReducer = () => {
   }
 
   return reducer;
-};
+}
 
-export const useDialogDispatch = () => {
+export function useDialogDispatch() {
   const dispatch = useContext(DialogDispatchContext);
 
   if (!dispatch) {
@@ -47,9 +42,9 @@ export const useDialogDispatch = () => {
   }
 
   return dispatch;
-};
+}
 
-export const usePlanetReducer = () => {
+export function usePlanetReducer() {
   const reducer = useContext(PlanetReducerContext);
 
   if (!reducer) {
@@ -59,9 +54,9 @@ export const usePlanetReducer = () => {
   }
 
   return reducer;
-};
+}
 
-export const usePlanetDispatch = () => {
+export function usePlanetDispatch() {
   const dispatch = useContext(PlanetDispatchContext);
 
   if (!dispatch) {
@@ -71,9 +66,9 @@ export const usePlanetDispatch = () => {
   }
 
   return dispatch;
-};
+}
 
-export const useSnackbarReducer = () => {
+export function useSnackbarReducer() {
   const reducer = useContext(SnackbarReducerContext);
 
   if (!reducer) {
@@ -83,9 +78,9 @@ export const useSnackbarReducer = () => {
   }
 
   return reducer;
-};
+}
 
-export const useSnackbarDispatch = () => {
+export function useSnackbarDispatch() {
   const dispatch = useContext(SnackbarDispatchContext);
 
   if (!dispatch) {
@@ -95,9 +90,9 @@ export const useSnackbarDispatch = () => {
   }
 
   return dispatch;
-};
+}
 
-export const useSystemReducer = () => {
+export function useSystemReducer() {
   const reducer = useContext(SystemReducerContext);
 
   if (!reducer) {
@@ -107,9 +102,9 @@ export const useSystemReducer = () => {
   }
 
   return reducer;
-};
+}
 
-export const useSystemDispatch = () => {
+export function useSystemDispatch() {
   const dispatch = useContext(SystemDispatchContext);
 
   if (!dispatch) {
@@ -119,28 +114,4 @@ export const useSystemDispatch = () => {
   }
 
   return dispatch;
-};
-
-export const useSystemListReducer = () => {
-  const reducer = useContext(SystemListReducerContext);
-
-  if (!reducer) {
-    throw new Error(
-      "General reducer has to be used withing <SystemReducerContext.Provider>",
-    );
-  }
-
-  return reducer;
-};
-
-export const useSystemListDispatch = () => {
-  const dispatch = useContext(SystemListDispatchContext);
-
-  if (!dispatch) {
-    throw new Error(
-      "General dispatch has to be used within <SystemDispatchContext.Provider>",
-    );
-  }
-
-  return dispatch;
-};
+}
