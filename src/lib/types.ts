@@ -87,7 +87,7 @@ export type SystemNoId = {
 };
 
 export type PlanetFilter = {
-  biomeOrAgriculture: string;
+  boa: string;
   stellar: string;
   local: string;
   general: string;

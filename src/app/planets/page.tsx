@@ -70,7 +70,7 @@ export default function PlanetPage() {
 
   const filterPlanets = (value: Planet) => {
     return planetFilterCheck(value, {
-      biomeOrAgriculture: "",
+      boa: "",
       stellar: "",
       local: "",
       general: "",
@@ -110,10 +110,10 @@ export default function PlanetPage() {
               {planets
                 .filter((value) =>
                   planetFilterCheck(value, {
-                    biomeOrAgriculture: boa,
-                    stellar: "",
-                    local: "",
-                    general: "",
+                    boa,
+                    stellar,
+                    local,
+                    general,
                   }),
                 )
                 .map((planet) => (
@@ -163,12 +163,28 @@ async function fetchPlanets(
 }
 
 function planetFilterCheck(planet: Planet, filter: PlanetFilter) {
-  if (filter.biomeOrAgriculture === "") {
+  const { boa, stellar, local, general } = filter;
+  if (boa === "" && stellar === "" && local === "" && general === "") {
     return true;
   }
-  return (
-    filter.biomeOrAgriculture !== "" &&
-    (planet.biome === filter.biomeOrAgriculture ||
-      planet.resources.agricultural === filter.biomeOrAgriculture)
-  );
+
+  let result = true;
+
+  if (boa !== "") {
+    result &&= planet.biome === boa || planet.resources.agricultural === boa;
+  }
+
+  if (stellar !== "") {
+    result &&= planet.resources.stellar === stellar;
+  }
+
+  if (local !== "") {
+    result &&= planet.resources.local === local;
+  }
+
+  if (general !== "") {
+    result &&= planet.resources.general === general;
+  }
+
+  return result;
 }

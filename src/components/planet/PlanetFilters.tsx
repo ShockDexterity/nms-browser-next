@@ -67,20 +67,72 @@ export default function PlanetFilters({
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={3}>
-        <MyAutocomplete label="Stellar Metal" name="" options={stellarMetals} />
-      </Grid>
-      <Grid item xs={12} sm={12} md={6} lg={3}>
-        <MyAutocomplete
-          label="Local Resource"
-          name=""
-          options={localResources}
+        <Autocomplete
+          clearOnEscape
+          options={stellarMetals}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Stellar Metal"
+              name=""
+              size="small"
+              required
+            />
+          )}
+          value={stellar !== "" ? stellar : null}
+          onInputChange={(event, value, reason) => {
+            if (reason === "clear") {
+              setStellar("");
+            } else {
+              setStellar(value);
+            }
+          }}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={3}>
-        <MyAutocomplete
-          label="General Resource"
-          name=""
+        <Autocomplete
+          clearOnEscape
+          options={localResources}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Stellar Metal"
+              name=""
+              size="small"
+              required
+            />
+          )}
+          value={local !== "" ? local : null}
+          onInputChange={(event, value, reason) => {
+            if (reason === "clear") {
+              setLocal("");
+            } else {
+              setLocal(value);
+            }
+          }}
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} md={6} lg={3}>
+        <Autocomplete
+          clearOnEscape
           options={generalResources}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Stellar Metal"
+              name=""
+              size="small"
+              required
+            />
+          )}
+          value={general !== "" ? general : null}
+          onInputChange={(event, value, reason) => {
+            if (reason === "clear") {
+              setGeneral("");
+            } else {
+              setGeneral(value);
+            }
+          }}
         />
       </Grid>
     </Grid>
