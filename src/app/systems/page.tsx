@@ -60,10 +60,6 @@ export default function PlanetPage() {
     });
   };
 
-  if (systems.length === 0) {
-    return <React.Fragment></React.Fragment>;
-  }
-
   return (
     <SystemReducerContext.Provider value={systemReducer}>
       <SystemDispatchContext.Provider value={systemDispatch}>
