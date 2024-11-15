@@ -26,5 +26,6 @@
     "Vermillion",
     "Vy'keen",
     "Xeno"
-  ]
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
