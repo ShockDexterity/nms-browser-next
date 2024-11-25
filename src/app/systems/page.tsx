@@ -33,7 +33,7 @@ import {
 
 const fabSX = { position: "absolute", bottom: 16, right: 16 };
 
-export default function PlanetPage() {
+export default function SystemPage() {
   const [systems, setSystems] = React.useState<System[]>([]);
 
   const [systemReducer, systemDispatch] = React.useReducer(
